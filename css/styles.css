@@ -67,6 +67,7 @@ nav ul li a:hover {
   background-color: white;
   padding: 4px;
   text-align: left;
+  max-width: 95%;
   z-index: 1;
 }
 
@@ -153,6 +154,7 @@ h2 {
 
 #first-text, #main {
   max-width: 1080px;
+  width: 100%;
 }
 
 #first-text p {
@@ -195,6 +197,7 @@ h3 {
   margin: 4px;
   flex: 1;
   cursor: pointer;
+  word-break: break-word;
   transition: 0.5s background-color;
 }
 
@@ -242,6 +245,14 @@ h3 {
 }
 
 @media screen and (max-width: 728px) {
+  h1 {
+    font-size: 22px;
+  }
+
+  .table-row {
+    flex-direction: column;
+  }
+
   .side-to-side {
     flex-direction: column;
   }
