@@ -1,0 +1,47 @@
+* {
+  --principal-color: #3f51b5;
+  --principal-color-darker: #29388a;
+}
+
+input[type="text"], input[type="password"], input[type="submit"] {
+  width: 100%;
+  height: 40px;
+  margin: 4px;
+  color: gray;
+  font-size: 18px;
+  font-family: Montserrat;
+  border: 2px solid #EBE9ED;
+}
+
+input[type="text"], input[type="password"] {
+  padding-left: 8px;
+  transition: 0.5s all;
+}
+
+input[type="text"]:hover, input[type="password"]:hover,
+input[type="text"]:focus, input[type="password"]:focus {
+  border-color: var(--principal-color);
+  color: var(--principal-color);
+  font-weight: bold;
+}
+
+input:focus::-webkit-input-placeholder {
+    color: var(--principal-color);
+}
+
+input[type="submit"] {
+  width: 80%;
+  font-weight: bold;
+  border: 0;
+  background-color: var(--principal-color);
+  color: white;
+  transition: 0.5s background-color;
+}
+
+input[type="submit"]:hover, input[type="submit"]:focus {
+  background-color: var(--principal-color-darker);
+}
+
+*:focus {
+  outline: none;
+}
