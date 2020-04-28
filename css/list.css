@@ -47,6 +47,24 @@ article:hover {
   font-size: 20px;
 }
 
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: 4px;
+}
+  
+.tag {
+  background-color: #DCDCDC;
+  color: gray;
+  margin: 4px;
+  font-weight: bold;
+  padding: 4px;
+  cursor: pointer;
+  user-select: none;
+  transition: 0.5s filter;
+}
+  
+
 @media screen and (max-width: 728px) {
   article {
     flex-direction: column;
