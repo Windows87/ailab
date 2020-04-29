@@ -5,6 +5,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/article.css">
     <link rel="stylesheet" href="css/admin-styles.css">
     <link rel="stylesheet" href="css/new-article.css">
     <!-- <link rel="shortcut icon" href="img/favicon.ico" /> -->
@@ -58,7 +59,7 @@
     <main>
       <div id="main">
       <form>
-         <input type="text" placeholder="Título" required />
+         <input type="text" name="title" placeholder="Título" required />
          <input type="text" placeholder="Descrição" required />
          <input type="text" placeholder="Tags (Separar por Vírgula)" required />
          
@@ -75,15 +76,21 @@
             <option>Aprendizado Não Supervisionado</option>
           </select>
 
-          <textarea placeholder="Texto (Suporta HTML)" required></textarea>
+          <textarea placeholder="Texto (Suporta HTML)" name="text" required></textarea>
 
-          <button type="button">Ver Preview</button>
+          <button id="view-preview" type="button">Ver Preview</button>
           <input type="submit" value="Criar" />
       </form>
       </div>
     </main>
 
-    <script src="https://www.chartjs.org/dist/2.9.3/Chart.min.js"></script>
-    <script src="js/dashboard.js"></script>
+    <div class="modal-background">
+      <div class="modal">
+        <i class="fa fa-close modal-exit"></i>
+        <article></article>
+      </div>
+    </div>
+
+    <script src="js/new-article.js"></script>
   </body>
 </html>

@@ -39,3 +39,7 @@ main form {
 textarea {
   flex: 1;
 }
+
+.modal {
+  max-width: 1080px;
+}
