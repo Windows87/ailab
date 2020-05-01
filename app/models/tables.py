@@ -40,10 +40,14 @@ class Article(db.Model):
 class Tag(db.Model):
     __tablename__ = "tags"
 
+    id: int
+    name: str
+
     id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String, nullable=False)
 
     def __init__(self, name):
+        print(name)
         self.name = name
 
     def __repr__(self):
@@ -55,7 +59,7 @@ class Topic(db.Model):
 
     id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String, nullable=False)
-    in_dropdown = db.Column(db.TinyInt, nullable=False)
+    in_dropdown = db.Column(db.Integer, nullable=False)
     subtopics = relationship('SubTopic', secondary = 'topic_subtopics')
 
     def __init__(self, name, in_dropdown):
@@ -76,7 +80,7 @@ class SubTopic(db.Model):
 
     id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String, nullable=False)
-    in_dropdown = db.Column(db.TinyInt, nullable=False)
+    in_dropdown = db.Column(db.Integer, nullable=False)
 
     def __init__(self, name, in_dropdown):
         self.name = name
@@ -130,8 +134,8 @@ class ArticleTag(db.Model):
     article_id = db.Column(db.Integer, db.ForeignKey('articles.id'), nullable=False)
     tag_id = db.Column(db.Integer, db.ForeignKey('tags.id'), nullable=False)
 
-    article = relationship('Article', backref=backref('article_tags', cascade='all, delete-orphan' ))
-    tag = relationship('Tag', backref=backref('article_tags', cascade='all, delete-orphan' ))
+    article = relationship('Article', backref=db.backref('article_tags', cascade='all, delete-orphan' ))
+    tag = relationship('Tag', backref=db.backref('article_tags', cascade='all, delete-orphan' ))
 
     def __init__(self, article, tag):
         self.article = article
@@ -148,8 +152,8 @@ class TopicSubtopic(db.Model):
     topic_id = db.Column(db.Integer, db.ForeignKey('topics.id'), nullable=False)
     subtopic_id = db.Column(db.Integer, db.ForeignKey('subtopics.id'), nullable=False)
 
-    topic = relationship('Topic', backref=backref('topic_subtopics', cascade='all, delete-orphan' ))
-    subtopic = relationship('Subtopic', backref=backref('topic_subtopics', cascade='all, delete-orphan' ))
+    topic = relationship('Topic', backref=db.backref('topic_subtopics', cascade='all, delete-orphan' ))
+    subtopic = relationship('SubTopic', backref=db.backref('topic_subtopics', cascade='all, delete-orphan' ))
 
     def __init__(self, topic, subtopic):
         self.topic = Topic
@@ -166,8 +170,8 @@ class AuthorSocialNetwork(db.Model):
     social_network_id = db.Column(db.Integer, db.ForeignKey('social_networks.id'), nullable=False)
     author_id = db.Column(db.Integer, db.ForeignKey('authors.id'), nullable=False)
 
-    social_network = relationship('SocialNetwork', backref=backref('author_social_networks', cascade='all, delete-orphan' ))
-    author = relationship('Author', backref=backref('author_social_networks', cascade='all, delete-orphan' ))
+    social_network = relationship('SocialNetwork', backref=db.backref('author_social_networks', cascade='all, delete-orphan' ))
+    author = relationship('Author', backref=db.backref('author_social_networks', cascade='all, delete-orphan' ))
 
     def __init__(self, social_network, author):
         self.social_network = social_network

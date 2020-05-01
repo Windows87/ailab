@@ -1,10 +1,14 @@
 import os
 
 from flask import Flask, send_from_directory
+from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__, static_folder="../static")
 app.config.from_object('config')
+
+cors = CORS(app, resources={"*": {"origins": "*"}})
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 db = SQLAlchemy(app)
 
@@ -33,4 +37,5 @@ def serve(path):
     return send_from_directory('../static', path)
 
 
-#from app.controllers import default
+from app.controllers import tags
+from app.controllers import topics

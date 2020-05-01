@@ -75,24 +75,34 @@ function createNewTagElement() {
   return div;
 }
 
-function setTags() {
+async function setTags() {
+  tags = await getAPI('tags');
+
+  console.log(tags);
+
   const selectBox = document.querySelector('.selectbox');
   selectBox.innerHTML = '';
   tags.forEach(tag => selectBox.appendChild(createTagElement(tag)));
   selectBox.appendChild(createNewTagElement());
 }
 
-function submitNewTag(event) {
+async function submitNewTag(event) {
   event.preventDefault();
 
   const name = event.target.name.value;
 
-  tags.push({ id: 3, name });
+  try {
+    const newTag = postAPI('tags', { name });
+    tags.push(newTag);
 
-  event.target.name.value = '';
+    event.target.name.value = '';
 
-  setTags();
-  closeModal('newTag');
+    setTags();
+    closeModal('newTag');    
+  } catch(error) {
+    alert('Erro ao Criar Tag');
+    console.log(error);
+  }
 }
 
 viewPreview.addEventListener('click', () => openModal('preview'));
