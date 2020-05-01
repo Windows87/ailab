@@ -17,7 +17,7 @@ main {
 }
 
 #main {
-  width: 95%;
+  width: calc(95% - 32px);
   max-width: 1080px;
   height: 90%;
   background-color: white;
@@ -36,10 +36,53 @@ main form {
   height: 100%;
 }
 
+.selectbox {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 8px;
+  margin-left: 0;
+  margin-right: 0;
+  margin-top: 12px;
+  width: calc(100% + 12px);
+}
+
+.selectbox div {
+  color: white;
+  background-color: gray;
+  border-radius: 12px;
+  font-weight: bold;
+  padding: 8px;
+  margin-right: 4px;
+  margin-bottom: 4px;
+  cursor: pointer;
+  user-select: none;
+  transition: 0.3s background-color;
+}
+
+.selectbox .selected {
+  background-color: var(--principal-color);
+}
+
 textarea {
   flex: 1;
 }
 
 .modal {
   max-width: 1080px;
+}
+
+#modal-newTag {
+  max-width: 600px;
+}
+
+#modal-newTag form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 16px;
+}
+
+#modal-newTag input[type="text"] {
+  width: 90%;
 }

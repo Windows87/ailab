@@ -33,4 +33,4 @@ def serve(path):
     return send_from_directory('../static', path)
 
 
-from app.controllers import default
+#from app.controllers import default

@@ -61,8 +61,8 @@
       <form>
          <input type="text" name="title" placeholder="Título" required />
          <input type="text" placeholder="Descrição" required />
-         <input type="text" name="tags" placeholder="Tags (Separar por Vírgula)" required />
-         
+         <div class="selectbox"></div>
+
          <select required>
            <option>Selecione um Tópico</option>
            <option>Machine Learning</option>
@@ -84,10 +84,20 @@
       </div>
     </main>
 
-    <div class="modal-background">
+    <div class="modal-background" id="modal-background-preview">
       <div class="modal">
-        <i class="fa fa-close modal-exit"></i>
+        <i class="fa fa-close modal-exit" id="modal-exit-preview"></i>
         <article></article>
+      </div>
+    </div>
+
+    <div class="modal-background" id="modal-background-newTag">
+      <div class="modal" id="modal-newTag">
+        <i class="fa fa-close modal-exit" id="modal-exit-newTag"></i>
+        <form id="form-newTag">
+          <input type="text" name="name" placeholder="Nome" required />
+          <input type="submit" value="Criar" />
+        </form>
       </div>
     </div>
 
