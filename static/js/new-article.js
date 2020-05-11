@@ -5,10 +5,8 @@ const form = document.querySelector('form');
 const formNewTag = document.querySelector('#form-newTag');
 const body = document.querySelector('body');
 
-let tags = [
-  { id: 0, name: 'KNN' },
-  { id: 1, name: 'Tensorflow' },
-];
+let tags = [];
+let topics = [];
 
 let tagsSelected = [];
 
@@ -75,15 +73,41 @@ function createNewTagElement() {
   return div;
 }
 
+function createSelectOption(value, name) {
+  const option = document.createElement('option');
+
+  option.value = value;
+  option.innerText = name;
+
+  return option;
+}
+
 async function setTags() {
   tags = await getAPI('tags');
-
-  console.log(tags);
 
   const selectBox = document.querySelector('.selectbox');
   selectBox.innerHTML = '';
   tags.forEach(tag => selectBox.appendChild(createTagElement(tag)));
   selectBox.appendChild(createNewTagElement());
+}
+
+async function setTopics() {
+  topics = await getAPI('topics');
+
+  const selectTopic = document.querySelector('#select-topics');
+  const selectSubTopic = document.querySelector('#select-subtopics');
+
+  topics.forEach(topic => selectTopic.appendChild(createSelectOption(topic.id, topic.name)));
+
+  selectTopic.addEventListener('change', () => {
+    topics.forEach(topic => {
+      if(topic.id == selectTopic.value) {
+        selectSubTopic.innerHTML = `<option value="">Selecione um Sub-Tópico</option>`;
+        topic.subtopics.forEach(subtopic => selectSubTopic.appendChild(createSelectOption(subtopic.id, subtopic.name)))
+        selectSubTopic.value = '';
+      }
+    });
+  });
 }
 
 async function submitNewTag(event) {
@@ -111,3 +135,4 @@ newTagExit.addEventListener('click', () => closeModal('newTag'));
 formNewTag.addEventListener('submit', submitNewTag);
 
 setTags();
+setTopics();

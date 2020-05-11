@@ -57,9 +57,14 @@ class Tag(db.Model):
 class Topic(db.Model):
     __tablename__ = "topics"
 
+    id: int
+    name: str
+    in_dropdown: bool
+    subtopics: list
+
     id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String, nullable=False)
-    in_dropdown = db.Column(db.Integer, nullable=False)
+    in_dropdown = db.Column(db.Boolean, nullable=False)
     subtopics = relationship('SubTopic', secondary = 'topic_subtopics')
 
     def __init__(self, name, in_dropdown):
@@ -69,7 +74,7 @@ class Topic(db.Model):
 
     def add_subtopics(self, items):
         for subtopic in items:
-            self.order_products.append(TopicSubtopic(topic=self, subtopic=subtopic))
+            self.subtopics.append(TopicSubtopic(topic=self, subtopic=subtopic))
 
     def __repr__(self):
         return "<Topic %r>" % self.name
@@ -77,6 +82,10 @@ class Topic(db.Model):
 @dataclass
 class SubTopic(db.Model):
     __tablename__ = "subtopics"
+
+    id: int
+    name: str
+    in_dropdown: bool
 
     id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String, nullable=False)
@@ -148,16 +157,16 @@ class ArticleTag(db.Model):
 class TopicSubtopic(db.Model):
     __tablename__ = 'topic_subtopics'
 
+    topic_id: int
+    subtopic_id: int
+
     id = db.Column(db.Integer, primary_key = True)
     topic_id = db.Column(db.Integer, db.ForeignKey('topics.id'), nullable=False)
     subtopic_id = db.Column(db.Integer, db.ForeignKey('subtopics.id'), nullable=False)
 
-    topic = relationship('Topic', backref=db.backref('topic_subtopics', cascade='all, delete-orphan' ))
-    subtopic = relationship('SubTopic', backref=db.backref('topic_subtopics', cascade='all, delete-orphan' ))
-
-    def __init__(self, topic, subtopic):
-        self.topic = Topic
-        self.subtopic = subtopic
+    def __init__(self, topic_id, subtopic_id):
+        self.topic_id = topic_id
+        self.subtopic_id = subtopic_id
 
     def __repr__(self):
         return '<TopicSubtopic>'        
