@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <title>DeepLab - {{ article.title }}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/article.css">
+    <!-- <link rel="shortcut icon" href="img/favicon.ico" /> -->
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0, shrink-to-fit=no">
+
+
+    <meta itemprop="name" content="DeepLab - {{ article.title }}">
+    <meta name="description" content="{{ article.description }}"/>
+    <meta name="language" content="PT">
+    <meta name="author" content="Yuri Faria, yuri.yurifaria@gmail.com">
+    <!-- <meta name="url" content="https://windows87.github.io/deeplab/"> -->
+
+    <meta property="og:title" content="DeepLab - {{ article.title }}"/>
+    <meta property="og:type" content="website">
+    <!-- <meta property="og:url" content="https://windows87.github.io/deeplab/"/> -->
+    <meta property="og:description" content="{{ article.description }}"/>
+    <meta property="og:email" content="yuri.yurifaria@gmail.com"/>
+    <meta property="og:image" content="{{ article.image }}" />
+
+    <meta property="twitter:image" content="{{ article.image }}g" />
+    <meta property="twitter:title" content="DeepLab - {{ article.title }}" />
+    <meta property="twitter:description" content="{{ article.description }}" />
+    <meta name="theme-color" content="#ffffff"> 
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-143577501-1"></script>
+    <!--
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-143577501-1');
+    </script>
+    -->
+    
+  </head>
+  <body>
+    <header>
+      <div id="header">
+      <h1>DeepLab</h1>
+      <nav>
+        <ul>
+          <li><a href="index.html">Início</a></li>
+          <li class="dropdown">
+            <button class="dropdown-button">Tópicos <i class="fa fa-caret-down"></i></button>
+            <div class="dropdown-content">
+              <a href="#">Machine Learning</a>
+              <div class="dropdown-content-2">
+                <a href="#">Algoritmos Supervisionados</a>
+                  <div class="dropdown-content-3">
+                    <a href="#">SVM</a>
+                  </div>
+                <a href="#">Algoritmos Não Supervisionados</a>
+              </div>
+              <a href="#">Deep Learning</a>
+              <div class="dropdown-content-2">
+                <a href="#">Tensorflow</a>
+                <a href="#">PyTorch</a>
+                <a href="#">Keras</a>
+              </div>
+              <a href="#">Visão Computacional</a>
+              <div class="dropdown-content-2">
+                <a href="#">OpenCV</a>
+              </div>
+            </div>
+          </div>          
+        </ul>
+      </nav>
+      </div>
+    </header>
+
+    <div class="principal-image"></div>
+
+    <main>
+      <article>
+        <h2>{{ article.title }}</h2>
+        <div class="tag-list">
+          {% for tag in article.tags %}
+            <div class="tag">{{ tag.name.upper() }}</div>
+          {% endfor %}
+          <div class="tag">{{ article.topic.name.upper() }}</div>
+          <div class="tag">27/JAN/2020</div>
+        </div>
+
+        {{ article.content | safe }}
+      </article>
+
+    <article id="about-author">
+      <img src="{{ article.author.image }}" />
+      <div>
+        <h3>{{ article.author.name }}</h3>
+        <p>{{ article.author.description }}</p>
+        <span id="more-details">Ver mais Detalhes</span>
+      </div>              
+    </article>
+
+      <div class="related-container">
+        <h3>Artigos Relacionados</h3>
+        <div class="related-list">
+          <div class="related-item">
+            <h4>Lorem ipsum</h4>
+            <p>Dolor sit amet, consectetur adipiscing elit. Duis mollis magna augue, nec maximus odio pretium non.</p>
+            <b>Julho de 2020</b>
+          </div>
+
+          <div class="related-item">
+              <h4>Lorem ipsum</h4>
+              <p>Dolor sit amet, consectetur adipiscing elit. Duis mollis magna augue, nec maximus odio pretium non.</p>
+              <b>Julho de 2020</b>
+            </div>
+            
+            <div class="related-item">
+              <h4>Lorem ipsum</h4>
+              <p>Dolor sit amet, consectetur adipiscing elit. Duis mollis magna augue, nec maximus odio pretium non.</p>
+              <b>Julho de 2020</b>
+            </div>              
+        </div> 
+      </div>      
+    </main>
+
+    <div class="modal-background">
+      <div class="modal">
+        <i class="fa fa-close modal-exit"></i>
+        <div class="basic-modal-info">
+          <img src="{{ article.author.image }}" />
+          <h3>{{ article.author.name }}</h3>
+        </div>
+        <p>{{ article.author.description }}.</p>
+        <div class="icons-list">
+          <a href="#"><img src="../img/icons/facebook.png" /></a>
+          <a href="#"><img src="../img/icons/github.png" /></a>
+          <a href="#"><img src="../img/icons/googleplay.png" /></a>
+          <a href="#"><img src="../img/icons/mail.png" /></a>
+          <a href="#"><img src="../img/icons/website.png" /></a>
+        </div>
+      </div>
+    </div>
+
+    <script src="../js/article.js"></script>
+  </body>
+</html>

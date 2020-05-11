@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 
 from dataclasses import dataclass
 from sqlalchemy.orm import relationship
@@ -8,19 +8,37 @@ from app import db
 class Article(db.Model):
     __tablename__ = "articles"
 
+    id: int
+    title: str
+    description: str
+    content: str
+    image: str
+    topic_id: int
+    subtopic_id: int
+    author_id: int
+    tags: list
+    author: dict
+    topic: dict
+    subtopic: dict
+
     id = db.Column(db.Integer, primary_key = True)
     title = db.Column(db.String, nullable=False)
     description = db.Column(db.String, nullable=False)
+    content = db.Column(db.String, nullable=False)
     image = db.Column(db.String, nullable=False)
     topic_id = db.Column(db.Integer, db.ForeignKey('topics.id'), nullable=False)
     subtopic_id = db.Column(db.Integer, db.ForeignKey('subtopics.id'), nullable=False)
     author_id = db.Column(db.Integer, db.ForeignKey('authors.id'), nullable=False)
     created_at = db.Column(db.DateTime, nullable=False)
     tags = relationship('Tag', secondary = 'article_tags')
+    author = relationship('Author')
+    topic = relationship('Topic')
+    subtopic = relationship('SubTopic')
 
-    def __init__(self, title, description, image, topic_id, subtopic_id, author_id):
+    def __init__(self, title, description, content, image, topic_id, subtopic_id, author_id):
         self.title = title
         self.description = description
+        self.content = content
         self.image = image
         self.topic_id = topic_id
         self.subtopic_id = subtopic_id
@@ -103,6 +121,11 @@ class SubTopic(db.Model):
 class Author(db.Model):
     __tablename__ = "authors"
 
+    id: int
+    name: str
+    image: str
+    description: str
+
     id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String, nullable=False)
     image = db.Column(db.String, nullable=False)
@@ -146,9 +169,9 @@ class ArticleTag(db.Model):
     article = relationship('Article', backref=db.backref('article_tags', cascade='all, delete-orphan' ))
     tag = relationship('Tag', backref=db.backref('article_tags', cascade='all, delete-orphan' ))
 
-    def __init__(self, article, tag):
-        self.article = article
-        self.tag = tag
+    def __init__(self, article_id, tag_id):
+        self.article_id = article_id
+        self.tag_id = tag_id
 
     def __repr__(self):
         return '<ArticleTag>'   
