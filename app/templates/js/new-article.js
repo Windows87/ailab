@@ -27,7 +27,7 @@ function openModal(type) {
 
   article.innerHTML = `
     <h2>${form.title.value}</h2>
-    ${form.text.value}
+    ${form.content.value}
   `;
 }
 
@@ -129,6 +129,36 @@ async function submitNewTag(event) {
   }
 }
 
+async function onFormSubmit(event) {
+  event.preventDefault();
+
+  const { title, image, description, topic, subtopic, content, submit } = form;
+
+  submit.disabled = true;
+  submit.value = 'Criando..';
+
+  try {
+    const article = await postAPI('articles', {
+      title: title.value,
+      image: image.value,
+      description: description.value,
+      topic_id: topic.value,
+      tags: tagsSelected,
+      subtopic_id: subtopic.value,
+      content: content.value
+    });
+
+    window.location.pathname = `/article/${article.id}`;
+  } catch(error) {
+    console.log(error);
+
+    submit.disabled = false;
+    submit.value = 'Criar';    
+
+    alert('Erro ao Criar Artigo');
+  }
+}
+
 viewPreview.addEventListener('click', () => openModal('preview'));
 previewExit.addEventListener('click', () => closeModal('preview'));
 newTagExit.addEventListener('click', () => closeModal('newTag'));
@@ -136,3 +166,5 @@ formNewTag.addEventListener('submit', submitNewTag);
 
 setTags();
 setTopics();
+
+form.addEventListener('submit', onFormSubmit);

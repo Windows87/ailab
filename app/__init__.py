@@ -40,6 +40,8 @@ from app.models.tables import Article
 
 @app.route('/article/<id>')
 def article(id):
-    article = Article.query.filter_by(id=id).one()
-    return render_template('article.html', article=article)
-    #return send_from_directory('../static', 'article.html')
+    try:
+        article = Article.query.filter_by(id=id).one()
+        return render_template('article.html', article=article)
+    except:
+        return render_template('not-found.html')

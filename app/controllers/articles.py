@@ -17,8 +17,7 @@ def articlesPost():
     title = request.json['title']
     description = request.json['description']
     content = request.json['content']
-    # image = request.json['image']
-    image = 'test.png'
+    image = request.json['image']
     topic_id = request.json['topic_id']
     subtopic_id = request.json['subtopic_id']
     # author_id = request.json['author_id']
