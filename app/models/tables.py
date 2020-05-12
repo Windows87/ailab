@@ -13,19 +13,19 @@ class Article(db.Model):
     description: str
     content: str
     image: str
-    topic_id: int
-    subtopic_id: int
-    author_id: int
+    views: int
     tags: list
     author: dict
     topic: dict
     subtopic: dict
+    created_at: datetime
 
     id = db.Column(db.Integer, primary_key = True)
     title = db.Column(db.String, nullable=False)
     description = db.Column(db.String, nullable=False)
     content = db.Column(db.String, nullable=False)
     image = db.Column(db.String, nullable=False)
+    views = db.Column(db.Integer, nullable=False)
     topic_id = db.Column(db.Integer, db.ForeignKey('topics.id'), nullable=False)
     subtopic_id = db.Column(db.Integer, db.ForeignKey('subtopics.id'), nullable=False)
     author_id = db.Column(db.Integer, db.ForeignKey('authors.id'), nullable=False)

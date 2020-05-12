@@ -87,7 +87,7 @@
             <div class="tag">{{ tag.name.upper() }}</div>
           {% endfor %}
           <div class="tag">{{ article.topic.name.upper() }}</div>
-          <div class="tag">27/JAN/2020</div>
+          <div class="tag">{{ article.created_at.day }}/{{ months[article.created_at.month - 1] }}/{{ article.created_at.year }}</div>
         </div>
 
         {{ article.content | safe }}

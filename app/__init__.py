@@ -12,6 +12,8 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 
 db = SQLAlchemy(app)
 
+months = ['JAN', 'FEV', 'MAR', 'ABR', 'MAI', 'JUN', 'JUL', 'AGO', 'SET', 'OUT', 'NOV', 'DEZ']
+
 @app.route('/')
 def index():
     return send_from_directory('templates', 'index.html')
@@ -20,7 +22,7 @@ def index():
 def listRouter():
     return send_from_directory('templates', 'list.html')
 
-@app.route('/admin')
+@app.route('/dashboard')
 def admin():
     return send_from_directory('templates', 'dashboard.html')
 
@@ -42,6 +44,9 @@ from app.models.tables import Article
 def article(id):
     try:
         article = Article.query.filter_by(id=id).one()
-        return render_template('article.html', article=article)
+        article.views += 1
+        db.session.commit()
+
+        return render_template('article.html', article=article, months=months)
     except:
         return render_template('not-found.html')

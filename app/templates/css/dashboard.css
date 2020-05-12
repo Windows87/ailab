@@ -57,6 +57,11 @@ main {
 
 .related-list {
   flex-direction: column;
+  width: 100%;
+}
+
+.related-item {
+  width: calc(100% - 32px);
 }
 
 @media screen and (max-width: 728px) {
