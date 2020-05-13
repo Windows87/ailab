@@ -191,6 +191,8 @@ function createRelatedItem(article, anotherInfo) {
 	container.appendChild(anotherInfoElement);
   }
 
+  container.addEventListener('click', () => window.location.href = `/article/${article.id}/`);
+
   container.appendChild(date);
 
   return container;

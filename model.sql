@@ -57,7 +57,7 @@ CREATE TABLE IF NOT EXISTS `deeplab`.`articles` (
   `title` VARCHAR(100) NOT NULL,
   `description` VARCHAR(200) NOT NULL,
   `content` LONGTEXT NOT NULL,
-  `image` VARCHAR(50) NOT NULL,
+  `image` VARCHAR(150) NOT NULL,
   `views` INT NOT NULL,
   `created_at` DATE NOT NULL,
   `topic_id` INT NOT NULL,

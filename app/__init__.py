@@ -14,22 +14,28 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 db = SQLAlchemy(app)
 
 months = ['JAN', 'FEV', 'MAR', 'ABR', 'MAI', 'JUN', 'JUL', 'AGO', 'SET', 'OUT', 'NOV', 'DEZ']
+url = 'http://localhost:5000'
 
 @app.route('/')
 def index():
-    return send_from_directory('templates', 'index.html')
+    topics = Topic.query.filter_by(in_dropdown=True)
+    return render_template('index.html', topics=topics)
 
 @app.route('/list')
+@app.route('/list/')
 def listRouter():
-    return send_from_directory('templates', 'list.html')
+    topics = Topic.query.filter_by(in_dropdown=True)
+    return render_template('list.html', url=url, topics=topics)
 
 @app.route('/dashboard')
+@app.route('/dashboard/')
 def admin():
-    return send_from_directory('templates', 'dashboard.html')
+    return render_template('dashboard.html', url=url)
 
 @app.route('/new-article')
+@app.route('/new-article/')
 def newArticle():
-    return send_from_directory('templates', 'new-article.html')
+    return render_template('new-article.html', url=url)
 
 @app.route('/<path:path>')
 def serve(path):
@@ -40,14 +46,17 @@ from app.controllers import tags
 from app.controllers import topics
 from app.controllers import articles
 from app.controllers import days
-from app.models.tables import Article, Day
+from app.models.tables import Article, Day, Topic 
 
 @app.route('/article/<id>')
+@app.route('/article/<id>/')
 def article(id):
     today = datetime.today()
 
     try:
         article = Article.query.filter_by(id=id).one()
+        topics = Topic.query.filter_by(in_dropdown=True)
+
         article.views += 1
         db.session.commit()
 
@@ -60,6 +69,6 @@ def article(id):
             db.session.add(day)
             db.session.commit()
 
-        return render_template('article.html', article=article, months=months)
+        return render_template('article.html', article=article, months=months, url=url, topics=topics)
     except:
-        return render_template('not-found.html')
+        return render_template('not-found.html', url=url)

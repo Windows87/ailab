@@ -4,8 +4,8 @@
     <title>DeepLab - SVM</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css">
-    <link rel="stylesheet" href="css/list.css">
+    <link rel="stylesheet" href="{{ url }}/css/styles.css">
+    <link rel="stylesheet" href="{{ url }}/css/list.css">
     <!-- <link rel="shortcut icon" href="img/favicon.ico" /> -->
 
     <meta charset="utf-8" />
@@ -46,35 +46,26 @@
   <body>
     <header>
       <div id="header">
-      <h1>DeepLab</h1>
-      <nav>
-        <ul>
-          <li><a href="index.html">Início</a></li>
-          <li class="dropdown">
-            <button class="dropdown-button">Tópicos <i class="fa fa-caret-down"></i></button>
-            <div class="dropdown-content">
-              <a href="#">Machine Learning</a>
-              <div class="dropdown-content-2">
-                <a href="#">Algoritmos Supervisionados</a>
-                  <div class="dropdown-content-3">
-                    <a href="#">SVM</a>
+        <h1>DeepLab</h1>
+        <nav>
+          <ul>
+            <li><a href="index.html">Início</a></li>
+            <li class="dropdown">
+              <button class="dropdown-button">Tópicos <i class="fa fa-caret-down"></i></button>
+              <div class="dropdown-content">
+                {% for topic in topics %}
+                  <a href="/list/topic/{{ topic.id }}">{{ topic.name }}</a>
+                  <div class="dropdown-content-2">
+                    {% for subtopic in topic.subtopics %}
+                      {% if subtopic.in_dropdown %}
+                        <a href="/list/subtopic/{{ subtopic.id }}">{{ subtopic.name }}</a>
+                      {% endif %}
+                    {% endfor %}
                   </div>
-                <a href="#">Algoritmos Não Supervisionados</a>
-              </div>
-              <a href="#">Deep Learning</a>
-              <div class="dropdown-content-2">
-                <a href="#">Tensorflow</a>
-                <a href="#">PyTorch</a>
-                <a href="#">Keras</a>
-              </div>
-              <a href="#">Visão Computacional</a>
-              <div class="dropdown-content-2">
-                <a href="#">OpenCV</a>
-              </div>
-            </div>
-          </div>          
-        </ul>
-      </nav>
+                {% endfor %}
+              </div>         
+            </ul>
+        </nav>
       </div>
     </header>
 
