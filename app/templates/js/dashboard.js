@@ -1,64 +1,75 @@
 const months = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
 const authorId = 1;
 
-var randomScalingFactor = function() {
-			return Math.round(Math.random() * 100);
-		};
+function setDaysViews(daysViews) {
+  let labels = [];
+  let data = [];
 
-		const config = {
-			type: 'line',
-			data: {
-				labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril'],
-				datasets: [{
-					label: 'Visualizações em Artigos',
-					backgroundColor: '#F00',
-					borderColor: '#F00',
-					data: [
-					  randomScalingFactor(),
-                      randomScalingFactor(),
-                      randomScalingFactor(),
-                      randomScalingFactor()
-					],
-					fill: false,
-				}]
-			},
-			options: {
-				responsive: true,
-				title: {
-					display: true,
-					text: 'Visualizações'
-				},
-				tooltips: {
-					mode: 'index',
-					intersect: false,
-				},
-				hover: {
-					mode: 'nearest',
-					intersect: true
-				},
-				scales: {
-					xAxes: [{
-						display: true,
-						scaleLabel: {
-							display: true,
-							labelString: 'Mês'
-						}
-					}],
-					yAxes: [{
-						display: true,
-						scaleLabel: {
-							display: true,
-							labelString: 'Visualizações'
-						}
-					}]
-				}
+  daysViews.forEach(day => {
+	labels.push(`${day.day}/${day.month}`);
+	data.push(day.views);
+  });
+
+  const spliceNumber = labels.length > 30 ? 30 : labels.length;
+
+  labels = labels.splice(0, spliceNumber);
+  data = data.splice(0, spliceNumber);
+
+  const config = {
+    type: 'line',
+	  data: {
+	    labels,
+		datasets: [{
+		  label: 'Visualizações em Artigos',
+		  backgroundColor: '#F00',
+		  borderColor: '#F00',
+		  data,
+		  fill: false,
+		}]
+	  },
+	  options: {
+		responsive: true,
+
+		title: {
+		  display: true,
+		  text: 'Visualizações'
+		},
+		tooltips: {
+		  mode: 'index',
+		  intersect: false,
+		},
+		hover: {
+		  mode: 'nearest',
+		  intersect: true
+		},
+		scales: {
+		  xAxes: [{
+		    display: true,
+			scaleLabel: {
+			  display: true,
+			  labelString: 'Dia'
 			}
-		};
+		  }],
+		  yAxes: [{
+			display: true,
+			ticks: {
+			  beginAtZero: true,
+			  min: 0
+			},			
+			scaleLabel: {
+			  display: true,		  
+			  labelString: 'Visualizações'
+			}
+		  }]
+		}
+	  }
+  };
+
+  const ctx = document.getElementById('canvas').getContext('2d');
+  window.myLine = new Chart(ctx, config);  
+}
 
 function setTopicsViews(topics) {
-  const ctx = document.getElementById('canvas').getContext('2d');
-  window.myLine = new Chart(ctx, config);
-
   const color = Chart.helpers.color;
 
   const labels = topics.map(topic => topic.name);
@@ -149,12 +160,14 @@ function setTopicsNumber(topics) {
   window.myDoughnut = new Chart(chartCtx, configChart);
 }
 
-function setStatisticData(numberOfArticles, totalViews) {
+function setStatisticData(numberOfArticles, totalViews, monthViews) {
   const articleData = document.querySelector('#article-data');
   const viewsData = document.querySelector('#views-data');
+  const viewsMonthData = document.querySelector('#views-month-data');
 
   articleData.innerText = numberOfArticles;
   viewsData.innerText = totalViews;
+  viewsMonthData.innerText = monthViews;
 }
 
 function createRelatedItem(article, anotherInfo) {
@@ -207,6 +220,7 @@ function setMostViewedArticlesByAuthor(articles, authorId) {
 async function start() {
   let articles = await getAPI('articles');
   let topics = await getAPI('topics');
+  let daysViews = await getAPI('days');
 
   topics = topics.map(topic => {
 	topic.views = 0;
@@ -216,6 +230,7 @@ async function start() {
 
   const numberOfArticles = articles.length;
   let totalViews = 0;
+  let monthViews = 0;
 
   articles = articles.map(article => {
 	totalViews += article.views;
@@ -234,11 +249,21 @@ async function start() {
 	return article;
   });
 
-  setStatisticData(numberOfArticles, totalViews);
+  for(let i = 0; i < daysViews.length; i++) {
+	const date = new Date();
+
+	if(daysViews[i].month - 1 === date.getMonth())
+	  monthViews += daysViews[i].views;
+	else
+	  break;
+  }
+
+  setStatisticData(numberOfArticles, totalViews, monthViews);
   setTopicsViews(topics);
   setTopicsNumber(topics);
   setMostViewedArticles(articles);
   setMostViewedArticlesByAuthor(articles, authorId);
+  setDaysViews(daysViews);
 }
 
 start();

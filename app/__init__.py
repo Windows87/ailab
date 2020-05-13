@@ -1,5 +1,6 @@
 import os
 
+from datetime import datetime
 from flask import Flask, send_from_directory, render_template
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
@@ -38,14 +39,26 @@ def serve(path):
 from app.controllers import tags
 from app.controllers import topics
 from app.controllers import articles
-from app.models.tables import Article
+from app.controllers import days
+from app.models.tables import Article, Day
 
 @app.route('/article/<id>')
 def article(id):
+    today = datetime.today()
+
     try:
         article = Article.query.filter_by(id=id).one()
         article.views += 1
         db.session.commit()
+
+        try:
+            day = Day.query.filter_by(day=today.day, month=today.month, year=today.year).one()
+            day.views += 1
+            db.session.commit()
+        except Exception as e:
+            day = Day(today.day, today.month, today.year, 1)
+            db.session.add(day)
+            db.session.commit()
 
         return render_template('article.html', article=article, months=months)
     except:

@@ -210,4 +210,28 @@ class AuthorSocialNetwork(db.Model):
         self.author = author
 
     def __repr__(self):
-        return '<AuthorSocialNetwork>'         
+        return '<AuthorSocialNetwork>'
+
+@dataclass
+class Day(db.Model):
+    __tablename__ = 'days'
+
+    day: int
+    month: int
+    year: int
+    views: int
+
+    id = db.Column(db.Integer, primary_key = True)
+    day = db.Column(db.Integer, nullable = False)
+    month = db.Column(db.Integer, nullable = False)         
+    year = db.Column(db.Integer, nullable = False)
+    views = db.Column(db.Integer, nullable = False)
+
+    def __init__(self, day, month, year, views):
+        self.day = day
+        self.month = month
+        self.year = year
+        self.views = views    
+
+    def __repr__(self):
+        return '<Month>'
