@@ -21,12 +21,6 @@ def index():
     topics = Topic.query.filter_by(in_dropdown=True)
     return render_template('index.html', topics=topics)
 
-@app.route('/list')
-@app.route('/list/')
-def listRouter():
-    topics = Topic.query.filter_by(in_dropdown=True)
-    return render_template('list.html', url=url, topics=topics)
-
 @app.route('/dashboard')
 @app.route('/dashboard/')
 def admin():
@@ -46,7 +40,7 @@ from app.controllers import tags
 from app.controllers import topics
 from app.controllers import articles
 from app.controllers import days
-from app.models.tables import Article, Day, Topic 
+from app.models.tables import Article, Day, Topic, SubTopic, Tag, Author
 
 @app.route('/article/<id>')
 @app.route('/article/<id>/')
@@ -71,4 +65,30 @@ def article(id):
 
         return render_template('article.html', article=article, months=months, url=url, topics=topics)
     except:
+        return render_template('not-found.html', url=url)
+
+@app.route('/list/<type>/<id>/')
+@app.route('/list/<type>/<id>/')
+def listRouter(type, id):
+    topics = Topic.query.filter_by(in_dropdown=True)
+    info = {}
+    articles = []
+
+    try:
+        if(type == 'topic'):
+            articles = Article.query.filter_by(topic_id=id)
+            info = Topic.query.filter_by(id=id).one()
+        elif (type == 'subtopic'):
+            articles = Article.query.filter_by(subtopic_id=id)
+            info = SubTopic.query.filter_by(id=id).one()
+        elif (type == 'author'):
+            articles = Article.query.filter_by(author_id=id)
+            info = Author.query.filter_by(id=id).one()
+        else:
+            articles = Article.query.join(Article.tags).filter(Tag.id == id)
+            info = Tag.query.filter_by(id=id).one()           
+         
+        return render_template('list.html', url=url, months=months, topics=topics, info=info, articles=articles)
+    except Exception as e:
+        print(e)
         return render_template('not-found.html', url=url)

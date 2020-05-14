@@ -16,6 +16,11 @@ main h2 {
   margin: 12px;
 }
 
+.article-a {
+  text-decoration: none;
+  color: currentColor;
+}
+
 article {
   background-color: white;
   display: flex;

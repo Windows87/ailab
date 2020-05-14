@@ -75,9 +75,11 @@
         <h2>{{ article.title }}</h2>
         <div class="tag-list">
           {% for tag in article.tags %}
-            <div class="tag">{{ tag.name.upper() }}</div>
+            <a href="{{ url }}/list/tag/{{ tag.id }}"><div class="tag">{{ tag.name.upper() }}</div></a>
           {% endfor %}
-          <div class="tag">{{ article.topic.name.upper() }}</div>
+          <a href="{{ url }}/list/topic/{{ article.topic.id }}"><div class="tag">{{ article.topic.name.upper() }}</div></a>
+          <a href="{{ url }}/list/subtopic/{{ article.subtopic.id }}"><div class="tag">{{ article.subtopic.name.upper() }}</div></a>
+          <a href="{{ url }}/list/author/{{ article.author.id }}"><div class="tag">{{ article.author.name.upper() }}</div></a>
           <div class="tag">{{ article.created_at.day }}/{{ months[article.created_at.month - 1] }}/{{ article.created_at.year }}</div>
         </div>
 

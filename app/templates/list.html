@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-br">
   <head>
-    <title>DeepLab - SVM</title>
+    <title>DeepLab - {{ info.name }}</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url }}/css/styles.css">
@@ -11,25 +11,22 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0, shrink-to-fit=no">
 
-    <!-- 
-    <meta itemprop="name" content="DeepLab - Grupo de Estudos">
+    <meta itemprop="name" content="DeepLab -  {{ info.name }}">
     <meta name="description" content="Grupo de Estudos sobre Inteligência Artificial, Deep Learning e Visão Computacional"/>
     <meta name="language" content="PT">
     <meta name="author" content="Yuri Faria, yuri.yurifaria@gmail.com">
-    <meta name="url" content="https://windows87.github.io/deeplab/"> 
+    <!-- <meta name="url" content="https://windows87.github.io/deeplab/"> -->
 
-    <meta property="og:title" content="DeepLab - Grupo de Estudos"/>
+    <meta property="og:title" content="DeepLab -  {{ info.name }}"/>
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://windows87.github.io/deeplab/"/>
-    <meta property="og:description" content="Grupo de Estudos sobre Inteligência Artificial, Deep Learning e Visão Computacional"/>
+    <!-- <meta property="og:url" content="https://windows87.github.io/deeplab/"/> -->    <meta property="og:description" content="Grupo de Estudos sobre Inteligência Artificial, Deep Learning e Visão Computacional"/>
     <meta property="og:email" content="yuri.yurifaria@gmail.com"/>
     <meta property="og:image" content="https://www.pngkey.com/png/full/96-967577_ai-artificial-intelligence-transparent-background.png" />
 
     <meta property="twitter:image" content="https://www.pngkey.com/png/full/96-967577_ai-artificial-intelligence-transparent-background.png" />
-    <meta property="twitter:title" content="DeepLab - Grupo de Estudos" />
+    <meta property="twitter:title" content="DeepLab - {{ info.name }}" />
     <meta property="twitter:description" content="Grupo de Estudos sobre Inteligência Artificial, Deep Learning e Visão Computacional" />
     <meta name="theme-color" content="#ffffff"> 
-    -->
 
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-143577501-1"></script>
     <!--
@@ -49,7 +46,7 @@
         <h1>DeepLab</h1>
         <nav>
           <ul>
-            <li><a href="index.html">Início</a></li>
+            <li><a href="{{ url }}">Início</a></li>
             <li class="dropdown">
               <button class="dropdown-button">Tópicos <i class="fa fa-caret-down"></i></button>
               <div class="dropdown-content">
@@ -70,36 +67,26 @@
     </header>
 
     <main>
-      <h2>SVM</h2>
-      <article>
-        <div class="article-image"></div>
-        <div class="article-text">
-          <h3>Lorem Ipsum</h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque ut ligula metus. Integer lacinia, est at laoreet dictum, dolor ex gravida est, non sagittis felis nisi ut elit. Aenean tristique tempus ante vel efficitur.</p>
-          <div class="tag-list">
-            <div class="tag">DLIB</div>
-            <div class="tag">FACIAL</div>
-            <div class="tag">DEEP LEARNING</div>
-            <div class="tag">BY: YURI FARIA</div>
-            <div class="tag">27/JAN/2020</div>
+      <h2>{{ info.name }}</h2>
+      {% for article in articles %}
+        <a class="article-a" href="{{ url }}/article/{{ article.id }}">
+        <article>
+          <div class="article-image" style="background-image: url({{ article.image }});"></div>
+          <div class="article-text">
+            <h3>{{ article.title }}</h3>
+            <p>{{ article.description }}</p>
+            <div class="tag-list">
+              {% for tag in article.tags %}
+                <div class="tag">{{ tag.name.upper() }}</div>
+              {% endfor %}
+              <div class="tag">{{ article.topic.name.upper() }}</div>
+              <div class="tag">{{ article.author.name.upper() }}</div>
+              <div class="tag">{{ article.created_at.day }}/{{ months[article.created_at.month - 1] }}/{{ article.created_at.year }}</div>
+            </div>
           </div>
-        </div>
-      </article>
- 
-      <article>
-        <div class="article-image"></div>
-        <div class="article-text">
-          <h3>Lorem Ipsum</h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque ut ligula metus. Integer lacinia, est at laoreet dictum, dolor ex gravida est, non sagittis felis nisi ut elit. Aenean tristique tempus ante vel efficitur.</p>
-          <div class="tag-list">
-            <div class="tag">DLIB</div>
-            <div class="tag">FACIAL</div>
-            <div class="tag">DEEP LEARNING</div>
-            <div class="tag">BY: YURI FARIA</div>
-            <div class="tag">27/JAN/2020</div>
-          </div>
-        </div>
-      </article>      
+        </article>
+        </a>
+      {% endfor %}    
     </main>
   </body>
 </html>

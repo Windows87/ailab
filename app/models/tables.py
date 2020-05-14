@@ -44,6 +44,7 @@ class Article(db.Model):
         self.subtopic_id = subtopic_id
         self.author_id = author_id
         self.created_at = datetime.now()
+        self.views = 0
         self.tags = []
 
     def add_tags(self, items):
