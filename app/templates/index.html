@@ -95,23 +95,15 @@
         <div class="related-container">
           <h3>Artigos</h3>
           <div class="related-list">
-            <div class="related-item">
-              <h4>Lorem ipsum</h4>
-              <p>Dolor sit amet, consectetur adipiscing elit. Duis mollis magna augue, nec maximus odio pretium non.</p>
-              <b>Julho de 2020</b>
-            </div>
-
-            <div class="related-item">
-                <h4>Lorem ipsum</h4>
-                <p>Dolor sit amet, consectetur adipiscing elit. Duis mollis magna augue, nec maximus odio pretium non.</p>
-                <b>Julho de 2020</b>
-              </div>
-              
-              <div class="related-item">
-                <h4>Lorem ipsum</h4>
-                <p>Dolor sit amet, consectetur adipiscing elit. Duis mollis magna augue, nec maximus odio pretium non.</p>
-                <b>Julho de 2020</b>
-              </div>              
+            {% for relatedArticle in machineLearningArticles %}
+              <a class="article-a" href="{{ url }}/article/{{ relatedArticle.id }}">
+                <div class="related-item">
+                 <h4>{{ relatedArticle.title }}</h4>
+                  <p>{{ relatedArticle.description }}</p>
+                  <b>{{ relatedArticle.created_at.day }} de {{ fullMonths[relatedArticle.created_at.month - 1] }} de {{ relatedArticle.created_at.year }}</b>
+                </div>
+              </a>
+            {% endfor %}              
           </div>
       </section>
 
@@ -131,54 +123,31 @@
         <div class="related-container">
           <h3>Artigos</h3>
           <div class="related-list">
-            <div class="related-item">
-              <h4>Lorem ipsum</h4>
-              <p>Dolor sit amet, consectetur adipiscing elit. Duis mollis magna augue, nec maximus odio pretium non.</p>
-              <b>Julho de 2020</b>
-            </div>
-
-            <div class="related-item">
-                <h4>Lorem ipsum</h4>
-                <p>Dolor sit amet, consectetur adipiscing elit. Duis mollis magna augue, nec maximus odio pretium non.</p>
-                <b>Julho de 2020</b>
-              </div>
-              
-              <div class="related-item">
-                <h4>Lorem ipsum</h4>
-                <p>Dolor sit amet, consectetur adipiscing elit. Duis mollis magna augue, nec maximus odio pretium non.</p>
-                <b>Julho de 2020</b>
-              </div>              
-        </div>
+            {% for relatedArticle in deepLearningArticles %}
+              <a class="article-a" href="{{ url }}/article/{{ relatedArticle.id }}">
+                <div class="related-item">
+                 <h4>{{ relatedArticle.title }}</h4>
+                  <p>{{ relatedArticle.description }}</p>
+                  <b>{{ relatedArticle.created_at.day }} de {{ fullMonths[relatedArticle.created_at.month - 1] }} de {{ relatedArticle.created_at.year }}</b>
+                </div>
+              </a>
+            {% endfor %}              
+          </div>
       </section>
 
       <section>
         <h3>Tópicos</h3>
       
         <div class="table">
-          <div class="table-row">
-            <div class="table-item">Machine Learning</div>
-            <div class="table-item">Deep Learning</div>
-          </div>
-
-          <div class="table-row">
-            <div class="table-item">Algoritmos Supervisionados</div>
-            <div class="table-item">Algoritmos Não Supervisionados</div>
-          </div>
-
-          <div class="table-row">
-            <div class="table-item">Jogos</div>
-            <div class="table-item">Algoritmos Genéticos</div>
-          </div>
-
-          <div class="table-row">
-            <div class="table-item">Keras</div>
-            <div class="table-item">Tensorflow</div>
-          </div>
-
-          <div class="table-row">
-            <div class="table-item">Pesquisas</div>
-            <div class="table-item">Estudo</div>
-          </div>          
+            {% for topic in topics %}
+            <a class="table-a" href="{{ url }}/list/topic/{{ topic.id }}"><div class="table-item">{{ topic.name }}</div></a>
+            {% endfor %}
+            {% for subtopic in subtopics %}
+            <a class="table-a" href="{{ url }}/list/subtopic/{{ subtopic.id }}"><div class="table-item">{{ subtopic.name }}</div></a>
+            {% endfor %} 
+            {% for tag in tags %}
+            <a class="table-a" href="{{ url }}/list/tag/{{ tag.id }}"><div class="table-item">{{ tag.name }}</div></a>
+            {% endfor %}                   
         </div>
       </section>
       </div>

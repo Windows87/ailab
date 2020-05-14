@@ -121,6 +121,12 @@ article a:hover {
   color: #085898;
 }
 
+.article-a {
+  text-decoration: none;
+  color: currentColor;
+  width: 100%;
+}
+
 #about-author {
   margin-top: 16px;
   display: flex;

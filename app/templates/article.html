@@ -99,11 +99,13 @@
         <h3>Artigos Relacionados</h3>
         <div class="related-list">
           {% for relatedArticle in relatedArticles %}
-            <div class="related-item">
-              <h4>{{ relatedArticle.title }}</h4>
-              <p>{{ relatedArticle.description }}</p>
-              <b>{{ article.created_at.day }} de {{ fullMonths[article.created_at.month - 1] }} de {{ article.created_at.year }}</b>
-            </div>
+            <a class="article-a" href="{{ url }}/article/{{ relatedArticle.id }}">
+              <div class="related-item">
+               <h4>{{ relatedArticle.title }}</h4>
+                <p>{{ relatedArticle.description }}</p>
+                <b>{{ relatedArticle.created_at.day }} de {{ fullMonths[relatedArticle.created_at.month - 1] }} de {{ relatedArticle.created_at.year }}</b>
+              </div>
+            </a>
           {% endfor %}             
         </div> 
       </div>      

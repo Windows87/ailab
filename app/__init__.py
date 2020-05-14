@@ -18,10 +18,10 @@ fullMonths = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho
 
 url = 'http://localhost:5000'
 
-@app.route('/')
-def index():
-    topics = Topic.query.filter_by(in_dropdown=True)
-    return render_template('index.html', topics=topics)
+@app.route('/login')
+@app.route('/login/')
+def login():
+    return render_template('login.html', url=url)
 
 @app.route('/dashboard')
 @app.route('/dashboard/')
@@ -43,6 +43,18 @@ from app.controllers import topics
 from app.controllers import articles
 from app.controllers import days
 from app.models.tables import Article, Day, Topic, SubTopic, Tag, Author
+
+@app.route('/')
+def index():
+    topics = Topic.query.filter_by(in_dropdown=True)
+    subtopics = SubTopic.query.filter_by(in_dropdown=True)
+
+    machineLearningArticles = Article.query.filter(Article.topic_id == 1).order_by(Article.views.desc()).limit(3)
+    deepLearningArticles = Article.query.filter(Article.topic_id == 3).order_by(Article.views.desc()).limit(3)
+
+    tags = Tag.query.all()
+    
+    return render_template('index.html', topics=topics, subtopics=subtopics, fullMonths=fullMonths, tags=tags, machineLearningArticles=machineLearningArticles, deepLearningArticles=deepLearningArticles)
 
 @app.route('/article/<id>')
 @app.route('/article/<id>/')

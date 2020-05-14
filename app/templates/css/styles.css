@@ -222,16 +222,19 @@ h3 {
 
 .table {
   width: calc(100% - 32px);
+  display: flex;
+  flex-wrap: wrap;
   margin: 16px;
 }
 
-.table-row {
-  width: 100%;
-  display: flex;
+.table-a {
+  color: currentColor;
+  text-decoration: none;
+  flex: 1;
+  min-width: calc(50% - 24px);
 }
 
-.table-row .table-item {
-  flex: 1;
+.table-item {
   color: gray;
   font-size: 20px;
   font-weight: bold;
@@ -246,13 +249,20 @@ h3 {
   background-color: #ececec;
 }
 
+.article-a {
+  text-decoration: none;
+  color: currentColor;
+  width: 100%;
+}
+
 @media screen and (max-width: 728px) {
   h1 {
     font-size: 22px;
   }
 
-  .table-row {
-    flex-direction: column;
+  .table-a {
+    width: 100%;
+    flex: unset;
   }
 
   .side-to-side {
