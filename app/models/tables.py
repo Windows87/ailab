@@ -126,6 +126,7 @@ class Author(db.Model):
     name: str
     image: str
     description: str
+    socialnetworks: list
 
     id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String, nullable=False)
@@ -133,6 +134,7 @@ class Author(db.Model):
     description = db.Column(db.String, nullable=False)
     username = db.Column(db.String, nullable=False)
     password = db.Column(db.String, nullable=False)
+    socialnetworks = relationship('AuthorSocialNetwork')
 
     def __init__(self, name, image, description, username, password):
         self.name = name
@@ -140,6 +142,7 @@ class Author(db.Model):
         self.description = description
         self.username = username
         self.password = password
+        self.socialnetworks = []
 
     def __repr__(self):
         return "<Author %r>" % self.name       
@@ -147,6 +150,10 @@ class Author(db.Model):
 @dataclass
 class SocialNetwork(db.Model):
     __tablename__ = "social_networks"
+
+    id: int
+    name: str
+    icon: str
 
     id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String, nullable=False)
@@ -199,16 +206,20 @@ class TopicSubtopic(db.Model):
 class AuthorSocialNetwork(db.Model):
     __tablename__ = 'author_social_networks'
 
+    link: str
+    socialnetwork: dict
+
     id = db.Column(db.Integer, primary_key = True)
     social_network_id = db.Column(db.Integer, db.ForeignKey('social_networks.id'), nullable=False)
+    link = db.Column(db.String, nullable = False)
     author_id = db.Column(db.Integer, db.ForeignKey('authors.id'), nullable=False)
 
-    social_network = relationship('SocialNetwork', backref=db.backref('author_social_networks', cascade='all, delete-orphan' ))
-    author = relationship('Author', backref=db.backref('author_social_networks', cascade='all, delete-orphan' ))
+    socialnetwork = relationship('SocialNetwork')
+    author = relationship('Author')
 
-    def __init__(self, social_network, author):
-        self.social_network = social_network
-        self.author = author
+    def __init__(self, social_network_id, author_id):
+        self.social_network_id = social_network_id
+        self.author_id = author_id
 
     def __repr__(self):
         return '<AuthorSocialNetwork>'

@@ -48,7 +48,7 @@
         <h1>DeepLab</h1>
         <nav>
           <ul>
-            <li><a href="index.html">Início</a></li>
+            <li><a href="{{ url }}">Início</a></li>
             <li class="dropdown">
               <button class="dropdown-button">Tópicos <i class="fa fa-caret-down"></i></button>
               <div class="dropdown-content">
@@ -98,23 +98,13 @@
       <div class="related-container">
         <h3>Artigos Relacionados</h3>
         <div class="related-list">
-          <div class="related-item">
-            <h4>Lorem ipsum</h4>
-            <p>Dolor sit amet, consectetur adipiscing elit. Duis mollis magna augue, nec maximus odio pretium non.</p>
-            <b>Julho de 2020</b>
-          </div>
-
-          <div class="related-item">
-              <h4>Lorem ipsum</h4>
-              <p>Dolor sit amet, consectetur adipiscing elit. Duis mollis magna augue, nec maximus odio pretium non.</p>
-              <b>Julho de 2020</b>
-            </div>
-            
+          {% for relatedArticle in relatedArticles %}
             <div class="related-item">
-              <h4>Lorem ipsum</h4>
-              <p>Dolor sit amet, consectetur adipiscing elit. Duis mollis magna augue, nec maximus odio pretium non.</p>
-              <b>Julho de 2020</b>
-            </div>              
+              <h4>{{ relatedArticle.title }}</h4>
+              <p>{{ relatedArticle.description }}</p>
+              <b>{{ article.created_at.day }} de {{ fullMonths[article.created_at.month - 1] }} de {{ article.created_at.year }}</b>
+            </div>
+          {% endfor %}             
         </div> 
       </div>      
     </main>
@@ -128,11 +118,9 @@
         </div>
         <p>{{ article.author.description }}.</p>
         <div class="icons-list">
-          <a href="#"><img src="../img/icons/facebook.png" /></a>
-          <a href="#"><img src="../img/icons/github.png" /></a>
-          <a href="#"><img src="../img/icons/googleplay.png" /></a>
-          <a href="#"><img src="../img/icons/mail.png" /></a>
-          <a href="#"><img src="../img/icons/website.png" /></a>
+          {% for socialnetwork in article.author.socialnetworks %}
+            <a href="{{ socialnetwork.link }}" target="_blank"><img src="{{ url }}/img/icons/{{ socialnetwork.socialnetwork.icon }}" /></a>
+          {%  endfor %}
         </div>
       </div>
     </div>

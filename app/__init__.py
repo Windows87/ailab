@@ -14,6 +14,8 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 db = SQLAlchemy(app)
 
 months = ['JAN', 'FEV', 'MAR', 'ABR', 'MAI', 'JUN', 'JUL', 'AGO', 'SET', 'OUT', 'NOV', 'DEZ']
+fullMonths = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro']
+
 url = 'http://localhost:5000'
 
 @app.route('/')
@@ -49,6 +51,7 @@ def article(id):
 
     try:
         article = Article.query.filter_by(id=id).one()
+        relatedArticles = Article.query.filter(Article.topic_id == article.topic.id, Article.id != article.id).order_by(Article.views.desc()).limit(3)
         topics = Topic.query.filter_by(in_dropdown=True)
 
         article.views += 1
@@ -63,7 +66,7 @@ def article(id):
             db.session.add(day)
             db.session.commit()
 
-        return render_template('article.html', article=article, months=months, url=url, topics=topics)
+        return render_template('article.html', article=article, relatedArticles=relatedArticles, months=months, fullMonths=fullMonths, url=url, topics=topics)
     except:
         return render_template('not-found.html', url=url)
 
