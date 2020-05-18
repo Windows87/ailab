@@ -42,6 +42,8 @@ from app.controllers import tags
 from app.controllers import topics
 from app.controllers import articles
 from app.controllers import days
+from app.controllers import users
+
 from app.models.tables import Article, Day, Topic, SubTopic, Tag, Author
 
 @app.route('/')

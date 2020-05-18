@@ -1,5 +1,7 @@
 from datetime import datetime
 
+from werkzeug.security import generate_password_hash
+
 from dataclasses import dataclass
 from sqlalchemy.orm import relationship
 from app import db
@@ -124,6 +126,8 @@ class Author(db.Model):
 
     id: int
     name: str
+    username: str
+    password: str
     image: str
     description: str
     socialnetworks: list
@@ -141,7 +145,7 @@ class Author(db.Model):
         self.image = image
         self.description = description
         self.username = username
-        self.password = password
+        self.password = generate_password_hash(password)
         self.socialnetworks = []
 
     def __repr__(self):
@@ -217,9 +221,10 @@ class AuthorSocialNetwork(db.Model):
     socialnetwork = relationship('SocialNetwork')
     author = relationship('Author')
 
-    def __init__(self, social_network_id, author_id):
+    def __init__(self, social_network_id, link, author_id):
         self.social_network_id = social_network_id
         self.author_id = author_id
+        self.link = link
 
     def __repr__(self):
         return '<AuthorSocialNetwork>'

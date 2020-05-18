@@ -1,3 +1,5 @@
+const token = localStorage.getItem('token');
+
 const months = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
 const authorId = 1;
 
@@ -218,54 +220,70 @@ function setMostViewedArticlesByAuthor(articles, authorId) {
   for(let i = 0; i < numberOfArticles; i++)
     mostViewedArticlesByAuthorContainer.appendChild(createRelatedItem(orderedArticles[i], orderedArticles[i].views));
 }
-  
+
+function isTokenInvalid(item) {
+  if(item.status === 401)
+    return true;
+}
+
+function goToLogin() {
+  localStorage.setItem('token', '');
+  window.location.href = '/login';
+}
+
 async function start() {
-  let articles = await getAPI('articles');
-  let topics = await getAPI('topics');
-  let daysViews = await getAPI('days');
+  try {
+    let articles = await getAPI('articles', token);
+    let topics = await getAPI('topics', token);
+    let daysViews = await getAPI('days', token);
 
-  topics = topics.map(topic => {
-	topic.views = 0;
-	topic.numberOfArticles = 0;
-	return topic;
-  });
-
-  const numberOfArticles = articles.length;
-  let totalViews = 0;
-  let monthViews = 0;
-
-  articles = articles.map(article => {
-	totalViews += article.views;
-
-	article.created_at = new Date(article.created_at);
-
-	topics = topics.map(topic => {
-	  if(topic.id === article.topic.id) {
-		topic.views += article.views;
-		topic.numberOfArticles += 1;
-	  }
-
+    topics = topics.map(topic => {
+	  topic.views = 0;
+	  topic.numberOfArticles = 0;
 	  return topic;
-	});
+    });
 
-	return article;
-  });
+    const numberOfArticles = articles.length;
+    let totalViews = 0;
+    let monthViews = 0;
 
-  for(let i = 0; i < daysViews.length; i++) {
-	const date = new Date();
+    articles = articles.map(article => {
+	  totalViews += article.views;
 
-	if(daysViews[i].month - 1 === date.getMonth())
-	  monthViews += daysViews[i].views;
-	else
-	  break;
-  }
+	  article.created_at = new Date(article.created_at);
 
-  setStatisticData(numberOfArticles, totalViews, monthViews);
-  setTopicsViews(topics);
-  setTopicsNumber(topics);
-  setMostViewedArticles(articles);
-  setMostViewedArticlesByAuthor(articles, authorId);
-  setDaysViews(daysViews);
+	  topics = topics.map(topic => {
+	    if(topic.id === article.topic.id) {
+		  topic.views += article.views;
+		  topic.numberOfArticles += 1;
+	    }
+
+	    return topic;
+	  });
+
+  	  return article;
+    });
+
+    for(let i = 0; i < daysViews.length; i++) {
+	  const date = new Date();
+
+	  if(daysViews[i].month - 1 === date.getMonth())
+	    monthViews += daysViews[i].views;
+	  else
+  	    break;
+    }
+
+    setStatisticData(numberOfArticles, totalViews, monthViews);
+    setTopicsViews(topics);
+    setTopicsNumber(topics);
+    setMostViewedArticles(articles);
+    setMostViewedArticlesByAuthor(articles, authorId);
+    setDaysViews(daysViews);
+  } catch(error) {
+	console.log(error);
+	if(isTokenInvalid(error))
+	  goToLogin()
+  } 
 }
 
 start();

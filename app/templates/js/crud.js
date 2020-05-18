@@ -3,11 +3,12 @@ const apiUrl = 'http://localhost:5000';
 function getAPI(url, token) {
   return new Promise(async (next, reject) => {
     try {
-      const chamada = await fetch(`${apiUrl}/api/${url}/`, { headers: { Authorization: `Bearer ${token}` } });
+      const chamada = await fetch(`${apiUrl}/api/${url}/`, { headers: { Authorization: token } });
       const dados = await chamada.json();
 
-      if(dados.erro)
-        return reject(dados.erro);
+
+      if(dados.error)
+        return reject({...dados, status: chamada.status});
     
       next(dados);
     } catch(error) {
@@ -16,17 +17,18 @@ function getAPI(url, token) {
   });
 }
   
-function deleteAPI(url, id) {
+function deleteAPI(url, id, token) {
   return new Promise(async (next, reject) => {
     try {
       const chamada = await fetch(`${apiUrl}/api/${url}/${id}`, {
-        method: 'DELETE'
+        method: 'DELETE',
+        headers: { Authorization: token }
       });
     
       const dados = await chamada.json();
     
-      if(dados.erro)
-        return reject(dados.erro);
+      if(dados.error)
+        return reject({...dados, status: chamada.status});
     
       next();
     } catch(erro) {
@@ -35,7 +37,7 @@ function deleteAPI(url, id) {
   });
 }
   
-function editAPI(url, id, dadosParaEdicao) {
+function editAPI(url, id, dadosParaEdicao, token) {
   return new Promise(async (next, reject) => {
     const body = JSON.stringify(dadosParaEdicao);
     
@@ -43,15 +45,16 @@ function editAPI(url, id, dadosParaEdicao) {
       const chamada = await fetch(`${apiUrl}/api/${url}/${id}`, {
         method: 'PUT',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Authorization': token
         },
         body
       });
             
       const dados = await chamada.json();
           
-      if(dados.erro)
-        return reject(dados.erro);
+      if(dados.error)
+        return reject({...dados, status: chamada.status});
      
       next(dados);
     } catch(erro) {
@@ -61,7 +64,7 @@ function editAPI(url, id, dadosParaEdicao) {
 }
     
   
-function postAPI(url, dadosParaCadastro) {
+function postAPI(url, dadosParaCadastro, token) {
   return new Promise(async (next, reject) => {
     const body = JSON.stringify(dadosParaCadastro);
     
@@ -69,15 +72,16 @@ function postAPI(url, dadosParaCadastro) {
       const chamada = await fetch(`${apiUrl}/api/${url}/`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Authorization': token
         },
         body
       });
             
       const dados = await chamada.json();
           
-      if(dados.erro)
-        return reject(dados.erro);
+      if(dados.error)
+        return reject({...dados, status: chamada.status});
   
       next(dados);
     } catch(erro) {

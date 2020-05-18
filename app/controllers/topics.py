@@ -2,6 +2,7 @@ from flask import jsonify, request
 from app import app, db
 
 from app.models.tables import Topic, SubTopic, TopicSubtopic
+from app.controllers.users import getAuthor
 from flask_cors import cross_origin
 
 @app.route('/api/topics/', methods = ['GET'])
@@ -16,6 +17,11 @@ def topicsGet():
 def topicsPost():
   name = request.json['name']
   in_dropdown = 0
+
+  author = getAuthor()
+
+  if type(author) is dict:
+    return jsonify(error = author['error'], id = author['id']), 401
 
   if "in_dropdown" in request.json:
     in_dropdown = 1
