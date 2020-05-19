@@ -10,18 +10,24 @@ Site de Estudos (sendo) criado em Python, Flask e MySQL para depositar artigos s
 
 <img src="https://raw.githubusercontent.com/Windows87/deeplab/master/screenshots/desktop-1.png" width="100%">
 <img src="https://raw.githubusercontent.com/Windows87/deeplab/master/screenshots/desktop-2.png" width="100%">
+<img src="https://raw.githubusercontent.com/Windows87/deeplab/master/screenshots/desktop-10.png" width="100%">
 <img src="https://raw.githubusercontent.com/Windows87/deeplab/master/screenshots/desktop-3.png" width="100%">
 <img src="https://raw.githubusercontent.com/Windows87/deeplab/master/screenshots/desktop-4.png" width="100%">
+<img src="https://raw.githubusercontent.com/Windows87/deeplab/master/screenshots/desktop-8.png" width="100%">
 <img src="https://raw.githubusercontent.com/Windows87/deeplab/master/screenshots/desktop-5.png" width="100%">
 <img src="https://raw.githubusercontent.com/Windows87/deeplab/master/screenshots/desktop-6.png" width="100%">
 <img src="https://raw.githubusercontent.com/Windows87/deeplab/master/screenshots/desktop-7.png" width="100%">
+<img src="https://raw.githubusercontent.com/Windows87/deeplab/master/screenshots/desktop-9.png" width="100%">
 
 ## Rotas
-- / -> Início
-- /article/:id/ -> Artigo
-- /list/:type/:id -> Lista de Tópicos/SubTópicos/Tags/Autores
-- /dashboard -> Dashboard Geral e do Autor
-- /new-article -> Escrever Novo Artigo
+- ```/``` -> Início
+- ```/about-us``` -> Sobre Nós
+- ```/article/:id/``` -> Artigo
+- ```/list/:type/:id``` -> Lista de Tópicos/SubTópicos/Tags/Autores
+- ```/``` -> Login
+- ```/dashboard``` -> Dashboard Geral e do Autor
+- ```/new-article``` -> Escrever Novo Artigo
+- ```/register-author``` -> Registra Novo Autor no Sistema
 
 ## Como Iniciar
 1. Inicie o MySQL
@@ -41,3 +47,7 @@ python run.py
 
 ## Outros Detalhes
 - Caso vá rodar em algum servidor, mude o valor da variável ```url``` em ```__init__.py```
+
+- Modifique o valor secret dos tokens da variável ```TOKEN_SECRET``` em ```config.py```
+
+- Modifique o valor de registro secreto da variável ```REGISTER_SECRET_CODE``` em ```config.py```

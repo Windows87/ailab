@@ -105,6 +105,14 @@ CREATE TABLE IF NOT EXISTS `deeplab`.`social_networks` (
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
+INSERT INTO `social_networks` (`id`, `name`, `icon`) VALUES
+(1, 'Facebook', 'facebook.png'),
+(2, 'GitHub', 'github.png'),
+(3, 'Google Play', 'googleplay.png'),
+(4, 'Email', 'mail.png'),
+(5, 'Website', 'website.png'),
+(6, 'Twitter', 'twitter.png');
+
 
 -- -----------------------------------------------------
 -- Table `deeplab`.`article_tags`
