@@ -21,14 +21,14 @@ main {
   flex-direction: column;
 }
 
-article, .related-container {
+article, .related-container, .comments-container {
   background-color: white;  
   width: 100%;
   padding: 16px;
   width: calc(100% - 32px);
 }
 
-.related-container {
+.related-container, .comments-container {
   margin-top: 16px;
   margin-bottom: 16px;
 }
@@ -146,6 +146,7 @@ article a:hover {
 #about-author img {
   width: 200px;
   height: 200px;
+  border-radius: 100px;
 }
 
 #about-author div {
