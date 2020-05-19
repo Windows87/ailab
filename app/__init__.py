@@ -44,7 +44,7 @@ from app.controllers import articles
 from app.controllers import days
 from app.controllers import users
 
-from app.models.tables import Article, Day, Topic, SubTopic, Tag, Author
+from app.models.tables import Article, Day, Topic, SubTopic, Tag, Author, SocialNetwork
 
 @app.route('/')
 def index():
@@ -64,6 +64,13 @@ def aboutUs():
     authors = Author.query.all()
 
     return render_template('about-us.html', url=url, authors=authors)
+
+@app.route('/register-author')
+@app.route('/register-author/')
+def registerAuthor():
+    socialnetworks = SocialNetwork.query.all()
+
+    return render_template('register-author.html', url=url, socialnetworks=socialnetworks)
 
 @app.route('/article/<id>')
 @app.route('/article/<id>/')

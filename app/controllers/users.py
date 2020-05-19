@@ -47,6 +47,10 @@ def authorsPost():
     password = request.json['password']
     image = request.json['image']
     description = request.json['description']
+    secretCode = request.json['secretcode']
+
+    if(secretCode != app.config['REGISTER_SECRET_CODE']):
+        return jsonify(error = 'secret code invalid', id = 4), 400
 
     author = Author(name, image, description, username, password)
     db.session.add(author)
@@ -62,8 +66,6 @@ def authorsPost():
         db.session.commit()
 
         author = Author.query.filter_by(id=author.id).one()
-
-    del author.password
 
     return jsonify(author)
 

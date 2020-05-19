@@ -1,10 +1,5 @@
 const form = document.querySelector('form');
 
-const errorList = {
-  '1': 'Usuário não existe',
-  '2': 'Senha Incorreta'
-};
-
 const goToDashboard = () => window.location.href = '/dashboard';
 
 function verifyToken() {
