@@ -1,4 +1,5 @@
 const token = localStorage.getItem('token');
+const headerExit = document.querySelector('#header-exit');
 
 const months = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
 const authorId = 1;
@@ -285,5 +286,7 @@ async function start() {
 	  goToLogin()
   } 
 }
+
+headerExit.addEventListener('click', goToLogin);
 
 start();

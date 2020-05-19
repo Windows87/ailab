@@ -1,8 +1,11 @@
+const token = localStorage.getItem('token');
+
 const previewExit = document.querySelector('#modal-exit-preview');
 const newTagExit = document.querySelector('#modal-exit-newTag');
 const viewPreview = document.querySelector('#view-preview');
 const form = document.querySelector('form');
 const formNewTag = document.querySelector('#form-newTag');
+const headerExit = document.querySelector('#header-exit');
 const body = document.querySelector('body');
 
 let tags = [];
@@ -129,6 +132,16 @@ async function submitNewTag(event) {
   }
 }
 
+function isTokenInvalid(item) {
+  if(item.status === 401)
+    return true;
+}
+
+function goToLogin() {
+  localStorage.setItem('token', '');
+  window.location.href = '/login';
+}
+
 async function onFormSubmit(event) {
   event.preventDefault();
 
@@ -152,6 +165,9 @@ async function onFormSubmit(event) {
   } catch(error) {
     console.log(error);
 
+    if(isTokenInvalid(error))
+      goToLogin()
+
     submit.disabled = false;
     submit.value = 'Criar';    
 
@@ -159,11 +175,23 @@ async function onFormSubmit(event) {
   }
 }
 
+async function start() {
+  try {
+    await getAPI('authors', token);
+  } catch(error) {
+    console.log(error);
+    if(isTokenInvalid(error))
+      goToLogin()
+  }
+}
+
 viewPreview.addEventListener('click', () => openModal('preview'));
 previewExit.addEventListener('click', () => closeModal('preview'));
 newTagExit.addEventListener('click', () => closeModal('newTag'));
 formNewTag.addEventListener('submit', submitNewTag);
+headerExit.addEventListener('click', goToLogin);
 
+start();
 setTags();
 setTopics();
 

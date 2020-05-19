@@ -1,5 +1,10 @@
 const form = document.querySelector('form');
 
+const errorList = {
+  '1': 'Usuário não existe',
+  '2': 'Senha Incorreta'
+};
+
 const goToDashboard = () => window.location.href = '/dashboard';
 
 function verifyToken() {
@@ -13,14 +18,17 @@ form.addEventListener('submit', async event => {
   
   const username = form.username.value;
   const password = form.password.value;
+  const submit = form.submit;
+
+  submit.value = 'Entrando..';
 
   try {
     const token = await postAPI('authors/authenticate', { username, password });
     localStorage.setItem('token', token.token);
     goToDashboard();
   } catch(error) {
-    console.log(error);
-    alert('Erro ao fazer Login');
+    submit.value = 'Entrar';
+    alert(errorList[error.id]);
   }
 });
 
