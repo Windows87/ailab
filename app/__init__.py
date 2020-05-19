@@ -58,6 +58,13 @@ def index():
     
     return render_template('index.html', topics=topics, subtopics=subtopics, fullMonths=fullMonths, tags=tags, machineLearningArticles=machineLearningArticles, deepLearningArticles=deepLearningArticles)
 
+@app.route('/about-us')
+@app.route('/about-us/')
+def aboutUs():
+    authors = Author.query.all()
+
+    return render_template('about-us.html', url=url, authors=authors)
+
 @app.route('/article/<id>')
 @app.route('/article/<id>/')
 def article(id):

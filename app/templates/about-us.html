@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <title>DeepLab - Sobre Nós</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{url}}/css/styles.css">
+    <link rel="stylesheet" href="{{url}}/css/about-us.css">
+    <!-- <link rel="shortcut icon" href="img/favicon.ico" /> -->
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0, shrink-to-fit=no">
+
+    <meta itemprop="name" content="DeepLab - Sobre Nós">
+    <meta name="description" content="Grupo de Estudos sobre Inteligência Artificial, Deep Learning e Visão Computacional"/>
+    <meta name="language" content="PT">
+    <meta name="author" content="Yuri Faria, yuri.yurifaria@gmail.com">
+    <!-- <meta name="url" content="https://windows87.github.io/deeplab/"> -->
+
+    <meta property="og:title" content="DeepLab - Sobre Nós"/>
+    <meta property="og:type" content="website">
+    <!-- <meta property="og:url" content="https://windows87.github.io/deeplab/"/> -->
+    <meta property="og:description" content="Grupo de Estudos sobre Inteligência Artificial, Deep Learning e Visão Computacional"/>
+    <meta property="og:email" content="yuri.yurifaria@gmail.com"/>
+    <meta property="og:image" content="https://www.pngkey.com/png/full/96-967577_ai-artificial-intelligence-transparent-background.png" />
+
+    <meta property="twitter:image" content="https://www.pngkey.com/png/full/96-967577_ai-artificial-intelligence-transparent-background.png" />
+    <meta property="twitter:title" content="DeepLab - Sobre Nós" />
+    <meta property="twitter:description" content="Grupo de Estudos sobre Inteligência Artificial, Deep Learning e Visão Computacional" />
+    <meta name="theme-color" content="#ffffff"> 
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-143577501-1"></script>
+    <!--
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-143577501-1');
+    </script>
+    -->
+    
+  </head>
+  <body>
+    <header>
+      <div id="header">
+        <h1>DeepLab</h1>
+        <nav>
+          <ul>
+            <li><a href="/">Início</a></li>
+            <li class="dropdown">
+              <button class="dropdown-button">Tópicos <i class="fa fa-caret-down"></i></button>
+              <div class="dropdown-content">
+                {% for topic in topics %}
+                  <a href="/list/topic/{{ topic.id }}">{{ topic.name }}</a>
+                  <div class="dropdown-content-2">
+                    {% for subtopic in topic.subtopics %}
+                      {% if subtopic.in_dropdown %}
+                        <a href="/list/subtopic/{{ subtopic.id }}">{{ subtopic.name }}</a>
+                      {% endif %}
+                    {% endfor %}
+                  </div>
+                {% endfor %}
+              </div>         
+            </ul>
+        </nav>
+      </div>
+    </header>
+    
+    <section class="side-to-side" id="first-text">
+        <div class="side-left">
+          <h2>DeepLab</h2>
+          <p>Grupo de estudos sobre Inteligência Artificial, abordando tópicos sobre Machine Learning, Deep Learning e Visão Computacional, buscando unir a teoria com a prática.</p>
+        </div>
+
+        <div class="side-right">
+          <img src="https://www.pngkey.com/png/full/96-967577_ai-artificial-intelligence-transparent-background.png" />
+        </div>
+      </section>
+
+    <main>
+      <div id="main">
+        <h2>Nossos Autores</h2>
+        {% for author in authors %}
+          <article class="about-author">
+            <a href="/list/author/{{ author.id }}">
+              <img src="{{ author.image }}" />
+            </a>
+
+            <div>
+              <h3><a href="/list/author/{{ author.id }}">{{ author.name }}</a></h3>
+              <p>{{ author.description }}</p>
+              <div class="about-author-socialnetworks">
+                {% for socialnetwork in author.socialnetworks %}
+                  <a href="{{ socialnetwork.link }}" target="_blank"><img src="{{ url }}/img/icons/{{ socialnetwork.socialnetwork.icon }}" /></a>
+                {%  endfor %}
+              </div>
+            </div>              
+          </article>    
+        {% endfor %}
+      </div>
+    </main>
+  </body>
+</html>
