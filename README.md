@@ -2,7 +2,7 @@
 <img src="https://www.pngkey.com/png/full/96-967577_ai-artificial-intelligence-transparent-background.png">
 </div>
 
-# DeepLab
+# AILab
 
 Site de Estudos (sendo) criado em Python, Flask e MySQL para depositar artigos sobre Inteligência Artificial.
 
@@ -35,9 +35,9 @@ Site de Estudos (sendo) criado em Python, Flask e MySQL para depositar artigos s
 3. Rode no Terminal
 ```bash
 # Clone o repositório
-git clone https://github.com/Windows87/deeplab/
+git clone https://github.com/Windows87/ailab/
 # Entre no repositório
-cd deeplab
+cd ailab
 # Instale as Dependências
 pip install -r requirements.txt
 # Inicialize
