@@ -33,8 +33,8 @@ def getAuthor():
 def authorsGet():
     author = getAuthor()
 
-    if 'error' in author:
-      return jsonify(error = author['error'], id = author['id']), 401
+    if type(author) is dict:
+        return jsonify(error = author['error'], id = author['id']), 401
 
     return jsonify(author)
 

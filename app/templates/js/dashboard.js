@@ -2,7 +2,6 @@ const token = localStorage.getItem('token');
 const headerExit = document.querySelector('#header-exit');
 
 const months = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
-const authorId = 1;
 
 function setDaysViews(daysViews) {
   let labels = [];
@@ -236,7 +235,8 @@ async function start() {
   try {
     let articles = await getAPI('articles', token);
     let topics = await getAPI('topics', token);
-    let daysViews = await getAPI('days', token);
+	let daysViews = await getAPI('days', token);
+	let author = await getAPI('authors', token);
 
     topics = topics.map(topic => {
 	  topic.views = 0;
@@ -278,7 +278,7 @@ async function start() {
     setTopicsViews(topics);
     setTopicsNumber(topics);
     setMostViewedArticles(articles);
-    setMostViewedArticlesByAuthor(articles, authorId);
+    setMostViewedArticlesByAuthor(articles, author.id);
     setDaysViews(daysViews);
   } catch(error) {
 	console.log(error);
