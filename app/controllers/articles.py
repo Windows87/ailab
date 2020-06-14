@@ -27,7 +27,6 @@ def articlesPost():
     topic_id = request.json['topic_id']
     subtopic_id = request.json['subtopic_id']
     author_id = author.id
-    author_id = 1
     tags = request.json['tags']
 
     article = Article(title, description, content, image, topic_id, subtopic_id, author_id)

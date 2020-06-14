@@ -119,7 +119,7 @@ async function submitNewTag(event) {
   const name = event.target.name.value;
 
   try {
-    const newTag = postAPI('tags', { name });
+    const newTag = await postAPI('tags', { name }, token);
     tags.push(newTag);
 
     event.target.name.value = '';
@@ -159,7 +159,7 @@ async function onFormSubmit(event) {
       tags: tagsSelected,
       subtopic_id: subtopic.value,
       content: content.value
-    });
+    }, token);
 
     window.location.pathname = `/article/${article.id}`;
   } catch(error) {
