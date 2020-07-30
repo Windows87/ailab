@@ -72,21 +72,53 @@
 
     <main>
       <div id="main">
+        <section>
+          <h3>Iniciando com Python</h3>
+  
+          <div class="side-to-side">
+            <div class="side-left normal-text">
+              <p>Python é uma das maiores e mais promissoras linguagens do mundo. Com ela, podemos construir aplicações web com Flask ou Django e utilizar aprendizado de máquina e redes neurais. Python é muito utilizado desde pequenas empresas até gigantes da tecnologia, como Google, Spotify e Netflix.</p>
+            </div>
+  
+            <div class="side-right">
+              <img src="{{ url }}/img/py.png" />
+            </div>          
+          </div>
+  
+          <div class="related-container">
+            {% if pythonArticles.count() %}
+              <h3>Artigos</h3>
+            {% endif %}
+            <div class="related-list">
+              {% for relatedArticle in pythonArticles %}
+                <a class="article-a" href="{{ url }}/article/{{ relatedArticle.id }}">
+                  <div class="related-item">
+                   <h4>{{ relatedArticle.title }}</h4>
+                    <p>{{ relatedArticle.description }}</p>
+                    <b>{{ relatedArticle.created_at.day }} de {{ fullMonths[relatedArticle.created_at.month - 1] }} de {{ relatedArticle.created_at.year }}</b>
+                  </div>
+                </a>
+              {% endfor %}              
+            </div>
+        </section>
+
       <section>
         <h3>Iniciando com Machine Learning</h3>
 
         <div class="side-to-side">
           <div class="side-right">
-            <img src="https://beltech2018.com/wp-content/uploads/2018/03/BelTech-2018-ICONS-Webside-Schedule-Machine-Learning.png" />
+            <img src="{{ url }}/img/ml.png" />
           </div>
 
           <div class="side-left normal-text">
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis mollis magna augue, nec maximus odio pretium non. Ut efficitur ex vel ante pretium convallis. Mauris euismod facilisis accumsan. Phasellus eu erat non ipsum facilisis molestie. Donec blandit lorem in erat condimentum suscipit. Nam libero massa, facilisis vel diam convallis, malesuada varius urna. Vivamus vitae purus felis. Nulla semper lacus ligula, vel tincidunt nulla efficitur vitae. Mauris pharetra mi ut est hendrerit ultricies. Vivamus lorem orci, mollis et porttitor vitae, posuere in ex. Fusce pellentesque, mi ut hendrerit euismod, est diam consequat ante, eu ultrices elit lorem eget leo.</p>
+            <p>Aprendizado de Máquina é um campo de estudos da Ciência da Computação para tentar dar a habilidade de aprender para computadores sem serem explicitamentes programados. Exemplos da aplicação do aprendizado de máquina são: tornar jogos inteligentes e fazer previsões, como prever fraudes, previsão de demanda e diagnósticos de saúde.</p>
           </div>
         </div>
 
         <div class="related-container">
-          <h3>Artigos</h3>
+          {% if machineLearningArticles.count() %}
+            <h3>Artigos</h3>
+          {% endif %}
           <div class="related-list">
             {% for relatedArticle in machineLearningArticles %}
               <a class="article-a" href="{{ url }}/article/{{ relatedArticle.id }}">
@@ -101,11 +133,11 @@
       </section>
 
       <section>
-        <h3>Iniciando com Deep Learning</h3>
+        <h3>Iniciando com Visão Computacional</h3>
 
         <div class="side-to-side">
           <div class="side-left normal-text">
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis mollis magna augue, nec maximus odio pretium non. Ut efficitur ex vel ante pretium convallis. Mauris euismod facilisis accumsan. Phasellus eu erat non ipsum facilisis molestie. Donec blandit lorem in erat condimentum suscipit. Nam libero massa, facilisis vel diam convallis, malesuada varius urna. Vivamus vitae purus felis. Nulla semper lacus ligula, vel tincidunt nulla efficitur vitae. Mauris pharetra mi ut est hendrerit ultricies. Vivamus lorem orci, mollis et porttitor vitae, posuere in ex. Fusce pellentesque, mi ut hendrerit euismod, est diam consequat ante, eu ultrices elit lorem eget leo.</p>
+            <p>Visão Computacional é tentar replicar a visão humana nos computadores. Podemos utilizar redes neurais e deep learning nessa função, para identificar objetos e pessoas. Usos da visão computacional são: carros autônomos, segurança e medicina.</p>
           </div>
 
           <div class="side-right">
@@ -114,9 +146,11 @@
         </div>
 
         <div class="related-container">
-          <h3>Artigos</h3>
+          {% if computerVisionArticles.count() %}
+            <h3>Artigos</h3>
+          {% endif %}
           <div class="related-list">
-            {% for relatedArticle in deepLearningArticles %}
+            {% for relatedArticle in computerVisionArticles %}
               <a class="article-a" href="{{ url }}/article/{{ relatedArticle.id }}">
                 <div class="related-item">
                  <h4>{{ relatedArticle.title }}</h4>

@@ -49,10 +49,11 @@ from app.models.tables import Article, Day, Tag, Author, SocialNetwork
 def index():
     tags = Tag.query.all()
 
-    machineLearningArticles = Article.query.join(Article.tags).filter(Tag.name == 'Machine Learning').order_by(Article.views.desc()).limit(3)
-    deepLearningArticles = Article.query.join(Article.tags).filter(Tag.name == 'Deep Learning').order_by(Article.views.desc()).limit(3)
-    
-    return render_template('index.html', fullMonths=fullMonths, tags=tags, machineLearningArticles=machineLearningArticles, deepLearningArticles=deepLearningArticles)
+    machineLearningArticles = Article.query.join(Article.tags).filter(Tag.name == 'Introdução a Machine Learning').order_by(Article.views.desc()).limit(3)
+    computerVisionArticles = Article.query.join(Article.tags).filter(Tag.name == 'Introdução a Visão Computacional').order_by(Article.views.desc()).limit(3)
+    pythonArticles = Article.query.join(Article.tags).filter(Tag.name == 'Introdução a Python').order_by(Article.views.desc()).limit(3)
+
+    return render_template('index.html', fullMonths=fullMonths, tags=tags, machineLearningArticles=machineLearningArticles, computerVisionArticles=computerVisionArticles, pythonArticles=pythonArticles)
 
 @app.route('/about-us')
 @app.route('/about-us/')
