@@ -52,15 +52,8 @@
             <li class="dropdown">
               <button class="dropdown-button">Tópicos <i class="fa fa-caret-down"></i></button>
               <div class="dropdown-content">
-                {% for topic in topics %}
-                  <a href="/list/topic/{{ topic.id }}">{{ topic.name }}</a>
-                  <div class="dropdown-content-2">
-                    {% for subtopic in topic.subtopics %}
-                      {% if subtopic.in_dropdown %}
-                        <a href="/list/subtopic/{{ subtopic.id }}">{{ subtopic.name }}</a>
-                      {% endif %}
-                    {% endfor %}
-                  </div>
+                {% for tag in tags %}
+                  <a href="/list/tag/{{ tag.id }}">{{ tag.name }}</a>
                 {% endfor %}
               </div>         
             </ul>
@@ -77,8 +70,6 @@
           {% for tag in article.tags %}
             <a href="{{ url }}/list/tag/{{ tag.id }}"><div class="tag">{{ tag.name.upper() }}</div></a>
           {% endfor %}
-          <a href="{{ url }}/list/topic/{{ article.topic.id }}"><div class="tag">{{ article.topic.name.upper() }}</div></a>
-          <a href="{{ url }}/list/subtopic/{{ article.subtopic.id }}"><div class="tag">{{ article.subtopic.name.upper() }}</div></a>
           <a href="{{ url }}/list/author/{{ article.author.id }}"><div class="tag">{{ article.author.name.upper() }}</div></a>
           <div class="tag">{{ article.created_at.day }}/{{ months[article.created_at.month - 1] }}/{{ article.created_at.year }}</div>
         </div>

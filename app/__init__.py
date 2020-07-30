@@ -39,24 +39,20 @@ def serve(path):
 
 
 from app.controllers import tags
-from app.controllers import topics
 from app.controllers import articles
 from app.controllers import days
 from app.controllers import users
 
-from app.models.tables import Article, Day, Topic, SubTopic, Tag, Author, SocialNetwork
+from app.models.tables import Article, Day, Tag, Author, SocialNetwork
 
 @app.route('/')
 def index():
-    topics = Topic.query.filter_by(in_dropdown=True)
-    subtopics = SubTopic.query.filter_by(in_dropdown=True)
-
-    machineLearningArticles = Article.query.filter(Article.topic_id == 1).order_by(Article.views.desc()).limit(3)
-    deepLearningArticles = Article.query.filter(Article.topic_id == 3).order_by(Article.views.desc()).limit(3)
-
     tags = Tag.query.all()
+
+    machineLearningArticles = Article.query.join(Article.tags).filter(Tag.name == 'Machine Learning').order_by(Article.views.desc()).limit(3)
+    deepLearningArticles = Article.query.join(Article.tags).filter(Tag.name == 'Deep Learning').order_by(Article.views.desc()).limit(3)
     
-    return render_template('index.html', topics=topics, subtopics=subtopics, fullMonths=fullMonths, tags=tags, machineLearningArticles=machineLearningArticles, deepLearningArticles=deepLearningArticles)
+    return render_template('index.html', fullMonths=fullMonths, tags=tags, machineLearningArticles=machineLearningArticles, deepLearningArticles=deepLearningArticles)
 
 @app.route('/about-us')
 @app.route('/about-us/')
@@ -79,8 +75,8 @@ def article(id):
 
     try:
         article = Article.query.filter_by(id=id).one()
-        relatedArticles = Article.query.filter(Article.topic_id == article.topic.id, Article.id != article.id).order_by(Article.views.desc()).limit(3)
-        topics = Topic.query.filter_by(in_dropdown=True)
+        relatedArticles = Article.query.filter(Article.id != article.id).order_by(Article.views.desc()).limit(3)
+        tags = Tag.query.all()
 
         article.views += 1
         db.session.commit()
@@ -94,32 +90,26 @@ def article(id):
             db.session.add(day)
             db.session.commit()
 
-        return render_template('article.html', article=article, relatedArticles=relatedArticles, months=months, fullMonths=fullMonths, url=url, topics=topics)
+        return render_template('article.html', article=article, relatedArticles=relatedArticles, months=months, fullMonths=fullMonths, url=url, tags=tags)
     except:
         return render_template('not-found.html', url=url)
 
 @app.route('/list/<type>/<id>/')
 @app.route('/list/<type>/<id>/')
 def listRouter(type, id):
-    topics = Topic.query.filter_by(in_dropdown=True)
+    tags = Tag.query.all()
     info = {}
     articles = []
 
     try:
-        if(type == 'topic'):
-            articles = Article.query.filter_by(topic_id=id)
-            info = Topic.query.filter_by(id=id).one()
-        elif (type == 'subtopic'):
-            articles = Article.query.filter_by(subtopic_id=id)
-            info = SubTopic.query.filter_by(id=id).one()
-        elif (type == 'author'):
+        if (type == 'author'):
             articles = Article.query.filter_by(author_id=id)
             info = Author.query.filter_by(id=id).one()
         else:
             articles = Article.query.join(Article.tags).filter(Tag.id == id)
             info = Tag.query.filter_by(id=id).one()           
          
-        return render_template('list.html', url=url, months=months, topics=topics, info=info, articles=articles)
+        return render_template('list.html', url=url, months=months, tags=tags, info=info, articles=articles)
     except Exception as e:
         print(e)
         return render_template('not-found.html', url=url)

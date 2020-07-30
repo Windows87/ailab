@@ -51,15 +51,8 @@
             <li class="dropdown">
               <button class="dropdown-button">Tópicos <i class="fa fa-caret-down"></i></button>
               <div class="dropdown-content">
-                {% for topic in topics %}
-                  <a href="/list/topic/{{ topic.id }}">{{ topic.name }}</a>
-                  <div class="dropdown-content-2">
-                    {% for subtopic in topic.subtopics %}
-                      {% if subtopic.in_dropdown %}
-                        <a href="/list/subtopic/{{ subtopic.id }}">{{ subtopic.name }}</a>
-                      {% endif %}
-                    {% endfor %}
-                  </div>
+                {% for tag in tags %}
+                  <a href="/list/tag/{{ tag.id }}">{{ tag.name }}</a>
                 {% endfor %}
               </div>         
             </ul>

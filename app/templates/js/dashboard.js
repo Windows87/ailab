@@ -71,11 +71,11 @@ function setDaysViews(daysViews) {
   window.myLine = new Chart(ctx, config);  
 }
 
-function setTopicsViews(topics) {
+function setTagsViews(tags) {
   const color = Chart.helpers.color;
 
-  const labels = topics.map(topic => topic.name);
-  const data = topics.map(topic => topic.views);
+  const labels = tags.map(tag => tag.name);
+  const data = tags.map(tag => tag.views);
 
   const barChartData = {
     labels,
@@ -108,15 +108,15 @@ function setTopicsViews(topics) {
 	  },
 	  title: {
 		display: true,
-		text: 'Visualizações por Tópico'
+		text: 'Visualizações por Tags'
 	  }
 	}
   });
 }
 
-function setTopicsNumber(topics) {
-  const labels = topics.map(topic => topic.name);
-  const data = topics.map(topic => topic.numberOfArticles);  
+function setTagsNumber(tags) {
+  const labels = tags.map(tag => tag.name);
+  const data = tags.map(tag => tag.numberOfArticles);  
 
   const configChart = {
 	type: 'doughnut',
@@ -149,7 +149,7 @@ function setTopicsNumber(topics) {
 	  },
 	  title: {
 	    display: true,
-		text: 'Número de Artigos por Tópico'
+		text: 'Número de Artigos por Tag'
 	  },
 	  animation: {
 		animateScale: true,
@@ -226,6 +226,10 @@ function isTokenInvalid(item) {
     return true;
 }
 
+function getTagsIdsFromArticle(article) {
+  return article.tags.map(tag => tag.id);
+}
+
 function goToLogin() {
   localStorage.setItem('token', '');
   window.location.href = '/login';
@@ -234,14 +238,16 @@ function goToLogin() {
 async function start() {
   try {
     let articles = await getAPI('articles', token);
-    let topics = await getAPI('topics', token);
+    let tags = await getAPI('tags', token);
 	let daysViews = await getAPI('days', token);
 	let author = await getAPI('authors', token);
 
-    topics = topics.map(topic => {
-	  topic.views = 0;
-	  topic.numberOfArticles = 0;
-	  return topic;
+	console.log(articles);
+
+    tags = tags.map(tag => {
+	  tag.views = 0;
+	  tag.numberOfArticles = 0;
+	  return tag;
     });
 
     const numberOfArticles = articles.length;
@@ -253,13 +259,15 @@ async function start() {
 
 	  article.created_at = new Date(article.created_at);
 
-	  topics = topics.map(topic => {
-	    if(topic.id === article.topic.id) {
-		  topic.views += article.views;
-		  topic.numberOfArticles += 1;
+	  tags = tags.map(tag => {
+		const tagsIdsFromArticle = getTagsIdsFromArticle(article);
+		console.log(tagsIdsFromArticle);
+	    if(tagsIdsFromArticle.includes(tag.id)) {
+		  tag.views += article.views;
+		  tag.numberOfArticles += 1;
 	    }
 
-	    return topic;
+	    return tag;
 	  });
 
   	  return article;
@@ -275,8 +283,8 @@ async function start() {
     }
 
     setStatisticData(numberOfArticles, totalViews, monthViews);
-    setTopicsViews(topics);
-    setTopicsNumber(topics);
+    setTagsViews(tags);
+    setTagsNumber(tags);
     setMostViewedArticles(articles);
     setMostViewedArticlesByAuthor(articles, author.id);
     setDaysViews(daysViews);

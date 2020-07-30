@@ -24,12 +24,10 @@ def articlesPost():
     description = request.json['description']
     content = request.json['content']
     image = request.json['image']
-    topic_id = request.json['topic_id']
-    subtopic_id = request.json['subtopic_id']
     author_id = author.id
     tags = request.json['tags']
 
-    article = Article(title, description, content, image, topic_id, subtopic_id, author_id)
+    article = Article(title, description, content, image, author_id)
 
     db.session.add(article)
     db.session.commit()

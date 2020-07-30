@@ -18,8 +18,6 @@ class Article(db.Model):
     views: int
     tags: list
     author: dict
-    topic: dict
-    subtopic: dict
     created_at: datetime
 
     id = db.Column(db.Integer, primary_key = True)
@@ -28,22 +26,16 @@ class Article(db.Model):
     content = db.Column(db.String, nullable=False)
     image = db.Column(db.String, nullable=False)
     views = db.Column(db.Integer, nullable=False)
-    topic_id = db.Column(db.Integer, db.ForeignKey('topics.id'), nullable=False)
-    subtopic_id = db.Column(db.Integer, db.ForeignKey('subtopics.id'), nullable=False)
     author_id = db.Column(db.Integer, db.ForeignKey('authors.id'), nullable=False)
     created_at = db.Column(db.DateTime, nullable=False)
     tags = relationship('Tag', secondary = 'article_tags')
     author = relationship('Author')
-    topic = relationship('Topic')
-    subtopic = relationship('SubTopic')
 
-    def __init__(self, title, description, content, image, topic_id, subtopic_id, author_id):
+    def __init__(self, title, description, content, image, author_id):
         self.title = title
         self.description = description
         self.content = content
         self.image = image
-        self.topic_id = topic_id
-        self.subtopic_id = subtopic_id
         self.author_id = author_id
         self.created_at = datetime.now()
         self.views = 0
@@ -73,52 +65,6 @@ class Tag(db.Model):
 
     def __repr__(self):
         return "<Tag %r>" % self.name
-
-@dataclass
-class Topic(db.Model):
-    __tablename__ = "topics"
-
-    id: int
-    name: str
-    in_dropdown: bool
-    subtopics: list
-
-    id = db.Column(db.Integer, primary_key = True)
-    name = db.Column(db.String, nullable=False)
-    in_dropdown = db.Column(db.Boolean, nullable=False)
-    subtopics = relationship('SubTopic', secondary = 'topic_subtopics')
-
-    def __init__(self, name, in_dropdown):
-        self.name = name
-        self.in_dropdown = in_dropdown
-        self.subtopics = []
-
-    def add_subtopics(self, items):
-        for subtopic in items:
-            self.subtopics.append(TopicSubtopic(topic=self, subtopic=subtopic))
-
-    def __repr__(self):
-        return "<Topic %r>" % self.name
-
-@dataclass
-class SubTopic(db.Model):
-    __tablename__ = "subtopics"
-
-    id: int
-    name: str
-    in_dropdown: bool
-
-    id = db.Column(db.Integer, primary_key = True)
-    name = db.Column(db.String, nullable=False)
-    in_dropdown = db.Column(db.Integer, nullable=False)
-
-    def __init__(self, name, in_dropdown):
-        self.name = name
-        self.in_dropdown = in_dropdown
-
-    def __repr__(self):
-        return "<SubTopic %r>" % self.name
-
 
 @dataclass
 class Author(db.Model):
@@ -186,25 +132,7 @@ class ArticleTag(db.Model):
         self.tag_id = tag_id
 
     def __repr__(self):
-        return '<ArticleTag>'   
-
-@dataclass
-class TopicSubtopic(db.Model):
-    __tablename__ = 'topic_subtopics'
-
-    topic_id: int
-    subtopic_id: int
-
-    id = db.Column(db.Integer, primary_key = True)
-    topic_id = db.Column(db.Integer, db.ForeignKey('topics.id'), nullable=False)
-    subtopic_id = db.Column(db.Integer, db.ForeignKey('subtopics.id'), nullable=False)
-
-    def __init__(self, topic_id, subtopic_id):
-        self.topic_id = topic_id
-        self.subtopic_id = subtopic_id
-
-    def __repr__(self):
-        return '<TopicSubtopic>'        
+        return '<ArticleTag>'         
 
 @dataclass
 class AuthorSocialNetwork(db.Model):

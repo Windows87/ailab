@@ -9,7 +9,6 @@ const headerExit = document.querySelector('#header-exit');
 const body = document.querySelector('body');
 
 let tags = [];
-let topics = [];
 
 let tagsSelected = [];
 
@@ -94,25 +93,6 @@ async function setTags() {
   selectBox.appendChild(createNewTagElement());
 }
 
-async function setTopics() {
-  topics = await getAPI('topics');
-
-  const selectTopic = document.querySelector('#select-topics');
-  const selectSubTopic = document.querySelector('#select-subtopics');
-
-  topics.forEach(topic => selectTopic.appendChild(createSelectOption(topic.id, topic.name)));
-
-  selectTopic.addEventListener('change', () => {
-    topics.forEach(topic => {
-      if(topic.id == selectTopic.value) {
-        selectSubTopic.innerHTML = `<option value="">Selecione um Sub-Tópico</option>`;
-        topic.subtopics.forEach(subtopic => selectSubTopic.appendChild(createSelectOption(subtopic.id, subtopic.name)))
-        selectSubTopic.value = '';
-      }
-    });
-  });
-}
-
 async function submitNewTag(event) {
   event.preventDefault();
 
@@ -145,7 +125,7 @@ function goToLogin() {
 async function onFormSubmit(event) {
   event.preventDefault();
 
-  const { title, image, description, topic, subtopic, content, submit } = form;
+  const { title, image, description, content, submit } = form;
 
   submit.disabled = true;
   submit.value = 'Criando..';
@@ -155,9 +135,7 @@ async function onFormSubmit(event) {
       title: title.value,
       image: image.value,
       description: description.value,
-      topic_id: topic.value,
       tags: tagsSelected,
-      subtopic_id: subtopic.value,
       content: content.value
     }, token);
 
@@ -193,6 +171,5 @@ headerExit.addEventListener('click', goToLogin);
 
 start();
 setTags();
-setTopics();
 
 form.addEventListener('submit', onFormSubmit);
