@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="pt-br">
   <head>
-    <title>AILab - Novo Artigo</title>
+    <title>AILab - Upload de Imagem</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url }}/css/styles.css">
     <link rel="stylesheet" href="{{ url }}/css/article.css">
     <link rel="stylesheet" href="{{ url }}/css/admin-styles.css">
     <link rel="stylesheet" href="{{ url }}/css/new-article.css">
+    <link rel="stylesheet" href="{{ url }}/css/upload.css">
     <!-- <link rel="shortcut icon" href="img/favicon.ico" /> -->
 
     <meta charset="utf-8" />
@@ -49,7 +50,6 @@
         <h1>AILab</h1>
         <nav>
           <ul>
-            <li><a href="{{ url }}/upload" target="_blank">Upload de Imagem</a></li>
             <li><a href="{{ url }}/dashboard">Voltar</a></li>
             <li><a id="header-exit">Sair</a></li>     
           </ul>
@@ -60,37 +60,21 @@
     <main>
       <div id="main">
       <form>
-         <input type="text" name="title" placeholder="Título" required />
-         <input type="text" name="image" placeholder="URL da Imagem" required />
-         <input type="text" name="description" placeholder="Descrição" required />
-         <div class="selectbox"></div>
-
-          <textarea placeholder="Texto (Suporta HTML)" name="content" required></textarea>
-
-          <button id="view-preview" type="button">Ver Preview</button>
-          <input name="submit" type="submit" value="Criar" />
+        <input type="file" name="image" required /> 
+        <input name="submit" type="submit" value="Fazer Upload" />
       </form>
       </div>
     </main>
 
-    <div class="modal-background" id="modal-background-preview">
+    <div class="modal-background" id="modal-background-file">
       <div class="modal">
-        <i class="fa fa-close modal-exit" id="modal-exit-preview"></i>
-        <article></article>
-      </div>
-    </div>
-
-    <div class="modal-background" id="modal-background-newTag">
-      <div class="modal" id="modal-newTag">
-        <i class="fa fa-close modal-exit" id="modal-exit-newTag"></i>
-        <form id="form-newTag">
-          <input type="text" name="name" placeholder="Nome" required />
-          <input type="submit" name="submit" value="Criar" />
-        </form>
+        <i class="fa fa-close modal-exit" id="modal-exit-file"></i>
+        <h3>A URL da Imagem é:</h3>
+        <p id="url"></p>
       </div>
     </div>
 
     <script src="{{ url }}/js/crud.js"></script>
-    <script src="{{ url }}/js/new-article.js"></script>
+    <script src="{{ url }}/js/upload.js"></script>
   </body>
 </html>

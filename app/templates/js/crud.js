@@ -90,3 +90,29 @@ function postAPI(url, dadosParaCadastro, token) {
     }
   });
 }
+
+function postFormDataAPI(url, body, token) {
+  return new Promise(async (next, reject) => { 
+    console.log(body);
+       
+    try {
+      const chamada = await fetch(`${apiUrl}/api/${url}/`, {
+        method: 'POST',
+        headers: {
+          'Authorization': token
+        },
+        body
+      });
+            
+      const dados = await chamada.json();
+          
+      if(dados.error)
+        return reject({...dados, status: chamada.status});
+  
+      next(dados);
+    } catch(erro) {
+      console.log(erro);
+      reject('Erro ao Conectar ao Servidor');
+    }
+  });
+}

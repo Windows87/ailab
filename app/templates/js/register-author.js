@@ -28,11 +28,7 @@ async function onSubmit(event) {
 
   try {
     await postAPI('authors', body);
-
-    formItens.forEach(formItem => form[formItem].value = '');
-    document.querySelectorAll('.socialnetwork-container').forEach(container => container.querySelector('input').value = '');
-
-    form.submit.value = 'Criar';
+    window.location.href = '/login';
   } catch(error) {
     form.submit.value = 'Criar';
     alert(error);
